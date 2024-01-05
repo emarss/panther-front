@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Company } from 'src/app/core/models/company';
+import { School } from 'src/app/core/models/school';
 import { appRoutes } from 'src/app/core/routes-list';
 import { AlertService } from 'src/app/core/services/alert.service';
-import { CompanyService } from 'src/app/core/services/company.service';
+import { SchoolService } from 'src/app/core/services/school.service';
 import { SettingService } from 'src/app/core/services/setting.service';
 import { ToastService } from 'src/app/core/services/toast-service.service';
 
@@ -12,18 +12,18 @@ import { ToastService } from 'src/app/core/services/toast-service.service';
   styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent {
-  company?: Company;
+  school?: School;
   public loading = true;
   public routes = appRoutes;
 
   constructor(
-    private companyService: CompanyService,
+    private schoolService: SchoolService,
     private settingService: SettingService,
     private toastService: ToastService,
     private alertService: AlertService
   ) {
-    if (!this.company) {
-      this.company = new Company(JSON.parse(localStorage.getItem('company')!));
+    if (!this.school) {
+      this.school = new School(JSON.parse(localStorage.getItem('school')!));
     }
   }
 
@@ -31,8 +31,8 @@ export class WelcomeComponent {
     this.loading = true;
     this.settingService.sayHiToRose().subscribe({
       next: (res) => {
-        this.companyService.saveCompanyToLocalStorage(res);
-        this.company = new Company(res);
+        this.schoolService.saveSchoolToLocalStorage(res);
+        this.school = new School(res);
         this.loading = false;
         this.toastService.showSuccess(
           'Rose has sent a Hello message to your WhatsApp number. Please, check your WhatsApp to start a conversation.'
@@ -52,7 +52,7 @@ export class WelcomeComponent {
         this.loading = false;
         if (res) {
           this.toastService.showSuccess(
-            `Verification email request has been sent to ${this.company?.email}.`
+            `Verification email request has been sent to ${this.school?.email}.`
           );
         } else {
           this.toastService.showError(
@@ -95,10 +95,10 @@ export class WelcomeComponent {
   }
 
   ngOnInit() {
-    this.companyService.show().subscribe({
+    this.schoolService.show().subscribe({
       next: (value) => {
-        this.company = new Company(value);
-        this.companyService.saveCompanyToLocalStorage(value);
+        this.school = new School(value);
+        this.schoolService.saveSchoolToLocalStorage(value);
         this.loading = false;
       },
       error: (err) => {

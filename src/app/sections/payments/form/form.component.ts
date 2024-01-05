@@ -63,8 +63,8 @@ export class FormComponent {
     private settingService: SettingService
   ) {
     this.initializeCreateForm();
-    this.current_currency = this.settingService.getCurrentCompanyCurrency();
-    this.currency = this.settingService.getCurrentCompanyCurrency();
+    this.current_currency = this.settingService.getCurrentSchoolCurrency();
+    this.currency = this.settingService.getCurrentSchoolCurrency();
 
     this.settingService.getPaymentCategories().subscribe({
       next: (value: Array<string>) => {

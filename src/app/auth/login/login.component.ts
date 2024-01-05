@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Company } from 'src/app/core/models/company';
+import { School } from 'src/app/core/models/school';
 import { Setting } from 'src/app/core/models/setting';
 import { User } from 'src/app/core/models/user';
 import { appRoutes } from 'src/app/core/routes-list';
-import { AlertService } from 'src/app/core/services/alert.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { CompanyService } from 'src/app/core/services/company.service';
+import { SchoolService } from 'src/app/core/services/school.service';
 import { SettingService } from 'src/app/core/services/setting.service';
 import { ToastService } from 'src/app/core/services/toast-service.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +26,7 @@ export class LoginComponent {
     fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private companyService: CompanyService,
+    private schoolService: SchoolService,
     private toastService: ToastService,
     private settingService: SettingService) {
     this.form = fb.group({
@@ -73,10 +71,10 @@ export class LoginComponent {
   private getAuthUser(res: any) {
     this.authService.getUser(res.access_token).subscribe({
       next: (user: User) => {
-        this.authService.getCompany(res.access_token).subscribe({
-          next: (company: Company) => {
+        this.authService.getSchool(res.access_token).subscribe({
+          next: (school: School) => {
             localStorage.setItem('user', JSON.stringify(user));
-            this.companyService.saveCompanyToLocalStorage(company);
+            this.schoolService.saveSchoolToLocalStorage(school);
             localStorage.setItem('access_token', res.access_token);
             this.getSettingsAndNavigateToHome();
           },

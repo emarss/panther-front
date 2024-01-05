@@ -31,7 +31,7 @@ export class DetailsComponent {
     private settingService: SettingService,
     private confirmDialogService: ConfirmDialogService
   ) {
-    this.current_currency = this.settingService.getCurrentCompanyCurrency();
+    this.current_currency = this.settingService.getCurrentSchoolCurrency();
   }
 
   confirmDelete() {

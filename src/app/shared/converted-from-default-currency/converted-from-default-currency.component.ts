@@ -15,6 +15,6 @@ export class ConvertedFromDefaultCurrencyComponent {
   constructor(
     private settingService: SettingService
   ) {
-    this.defaultCurrency = this.settingService.getCurrentCompanyCurrency();
+    this.defaultCurrency = this.settingService.getCurrentSchoolCurrency();
   }
 }

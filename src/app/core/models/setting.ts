@@ -10,7 +10,7 @@ export class Setting {
   document_template_id!: number;
 
   uuid!: string;
-  company_uuid!: string;
+  school_uuid!: string;
   date_created!: number;
   date_updated!: number;
 
@@ -25,7 +25,7 @@ export class Setting {
     this.document_color = data.document_color;
     this.document_template_id = data.document_template_id;
 
-    this.company_uuid = data.company_uuid;
+    this.school_uuid = data.school_uuid;
     this.uuid = data.uuid;
     this.date_created = data.date_created;
     this.date_updated = data.date_updated;

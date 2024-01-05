@@ -24,14 +24,14 @@
           </a>
         </div>
         <li class="nav-item ps-3 border-start border-secondary">
-          <div class="d-inline-block switch-company-dropdown" ngbDropdown #profileDrop="ngbDropdown">
+          <div class="d-inline-block switch-school-dropdown" ngbDropdown #profileDrop="ngbDropdown">
             <a class="nav-link user-icon me-0" href="javascript:void(0)" id="profileDropdown" ngbDropdownAnchor
               (focus)="profileDrop.open()">
               <div class="d-flex align-items-center">
                 <div class="text-end justify-content-center me-3">
                   <div class="text-gray-200 fs-8 fw-semibold lh-1 mb-1">
                     {{ user.name }}</div>
-                  <div class="text-white fs-8 fw-bold lh-1">{{ company.company_name }}</div>
+                  <div class="text-white fs-8 fw-bold lh-1">{{ school.school_name }}</div>
                 </div>
                 <i class="bi bi-person-gear"></i>
               </div>

@@ -8,7 +8,7 @@ export class Preference {
   uuid!: string;
   date_created!: number;
   date_updated!: number;
-  company_uuid!: string;
+  school_uuid!: string;
 
   user!: User;
 
@@ -20,7 +20,7 @@ export class Preference {
     this.uuid = data.uuid;
     this.date_created = data.date_created;
     this.date_updated = data.date_updated;
-    this.company_uuid = data.company_uuid;
+    this.school_uuid = data.school_uuid;
 
     if (data.user) {
       this.user = new User(data.user);

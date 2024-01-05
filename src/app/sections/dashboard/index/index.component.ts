@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Company } from 'src/app/core/models/company';
+import { School } from 'src/app/core/models/school';
 import { appRoutes } from 'src/app/core/routes-list';
 
 @Component({
@@ -8,13 +8,13 @@ import { appRoutes } from 'src/app/core/routes-list';
   styleUrls: ['./index.component.scss'],
 })
 export class IndexComponent {
-  currentCompany!: Company;
+  currentSchool!: School;
   public loading = false;
   public routes = appRoutes;
 
   constructor() {
-    this.currentCompany = new Company(
-      JSON.parse(localStorage.getItem('company')!)
+    this.currentSchool = new School(
+      JSON.parse(localStorage.getItem('school')!)
     );
   }
 }

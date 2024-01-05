@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
-import { Company } from '../models/company';
+import { School } from '../models/school';
 
 @Injectable({
   providedIn: 'root',
@@ -125,7 +125,7 @@ export class AuthService {
 
 
 
-  getCompany(token: string) {
+  getSchool(token: string) {
     const options = {
       headers: new HttpHeaders({
         Accept: 'application/json',
@@ -134,7 +134,7 @@ export class AuthService {
       }),
     };
 
-    return this.http.get<Company>(this.apiUrl + '/company', options);
+    return this.http.get<School>(this.apiUrl + '/school', options);
   }
 
 

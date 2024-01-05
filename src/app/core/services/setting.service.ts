@@ -5,7 +5,7 @@ import { Currency } from '../models/currency';
 import { Setting } from '../models/setting';
 import { UserPermissionType } from '../models/user-permission-type';
 import { CountryCode } from '../models/country-code';
-import { Company } from '../models/company';
+import { School } from '../models/school';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -47,7 +47,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -63,11 +63,11 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
-    return this.http.get<Company>(this.apiUrl + '/say-hi', options);
+    return this.http.get<School>(this.apiUrl + '/say-hi', options);
   }
 
   getBusinessCategories() {
@@ -106,7 +106,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -122,7 +122,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -138,7 +138,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -151,7 +151,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -167,7 +167,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -184,7 +184,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -200,7 +200,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -216,7 +216,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -229,7 +229,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -245,7 +245,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -261,7 +261,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -277,7 +277,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -293,7 +293,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -308,7 +308,7 @@ export class SettingService {
       headers: new HttpHeaders({
         Accept: 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
       reportProgress: true,
       observe: 'events' as 'body',
@@ -317,7 +317,7 @@ export class SettingService {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     return this.http.post(
-      this.apiUrl + `/companies/upload-logo`,
+      this.apiUrl + `/schools/upload-logo`,
       formData,
       options
     );
@@ -329,12 +329,12 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
     return this.http.delete<any>(
-      this.apiUrl + `/companies/delete-logo`,
+      this.apiUrl + `/schools/delete-logo`,
       options
     );
   }
@@ -345,7 +345,7 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
     return this.http.put<Setting>(this.apiUrl + `/settings`, setting, options);
@@ -358,32 +358,32 @@ export class SettingService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
     return this.http.put<any>(this.apiUrl + `/settings/document-color`, setting, options);
   }
 
-  getCurrentCompanyUuid(): string {
-    return new Company(JSON.parse(localStorage.getItem('company')!)).uuid;
+  getCurrentSchoolUuid(): string {
+    return new School(JSON.parse(localStorage.getItem('school')!)).uuid;
   }
 
-  getCurrentCompanyCurrency(): string {
+  getCurrentSchoolCurrency(): string {
     return new Setting(JSON.parse(localStorage.getItem('setting')!)).currency;
   }
 
-  getCurrentCompany() {
+  getCurrentSchool() {
     const options = {
       headers: new HttpHeaders({
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
-    return this.http.get<Company>(
-      this.apiUrl + `/companies/${this.getCurrentCompanyUuid()}`,
+    return this.http.get<School>(
+      this.apiUrl + `/schools/${this.getCurrentSchoolUuid()}`,
       options
     );
   }

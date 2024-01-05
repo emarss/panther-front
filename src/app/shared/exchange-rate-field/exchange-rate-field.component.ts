@@ -38,7 +38,7 @@ export class ExchangeRateFieldComponent implements ControlValueAccessor, Validat
 
 
   constructor(private settingService: SettingService) {
-    this.defaultCurrency = this.settingService.getCurrentCompanyCurrency()
+    this.defaultCurrency = this.settingService.getCurrentSchoolCurrency()
   }
 
   ngOnInit(): void {

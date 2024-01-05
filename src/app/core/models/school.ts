@@ -1,5 +1,5 @@
-export class Company {
-  company_name?: string;
+export class School {
+  school_name?: string;
   email?: string;
   physical_address?: string;
   phone_number?: string;
@@ -20,7 +20,7 @@ export class Company {
   date_updated!: number;
 
   constructor(data: any) {
-    this.company_name = data.company_name;
+    this.school_name = data.school_name;
     this.whatsapp_number = data.whatsapp_number;
     this.email = data.email;
     this.physical_address = data.physical_address;

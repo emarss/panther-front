@@ -44,7 +44,7 @@ export class StatementComponent {
     private settingService: SettingService
   ) {
     this.setStartAndEndDateString();
-    this.current_currency = this.settingService.getCurrentCompanyCurrency();
+    this.current_currency = this.settingService.getCurrentSchoolCurrency();
   }
 
   ngOnInit() {

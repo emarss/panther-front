@@ -99,8 +99,8 @@ export class FormComponent {
     this.purchaseOrderDays =
       this.settingService.getPurchaseOrderDueDateDaysFromLocal();
 
-    this.current_currency = this.settingService.getCurrentCompanyCurrency();
-    this.currency = this.settingService.getCurrentCompanyCurrency();
+    this.current_currency = this.settingService.getCurrentSchoolCurrency();
+    this.currency = this.settingService.getCurrentSchoolCurrency();
 
     this.initializeCreateForm();
     this.initializeSelectedPurchaseOrderItems();

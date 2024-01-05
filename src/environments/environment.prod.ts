@@ -17,8 +17,8 @@
 
 export const environment = {
   production: true,
-  apiURL: 'https://api.averycloud.co.zw/api',
-  baseURL: 'https://api.averycloud.co.zw/',
+  apiURL: 'https://api.sms.eyetrodigital.com/api',
+  baseURL: 'https://api.sms.eyetrodigital.com/',
   pusher_secret: "aac9b1e8470f17e1f566",
   pusher_cluster: "us2",
   google_oauth_client_id: '258597671715-k1sab4v7urjjjq487l0cc75lflg3hk9j.apps.googleusercontent.com'

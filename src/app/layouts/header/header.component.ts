@@ -7,7 +7,7 @@ import {
   Router,
 } from '@angular/router';
 import { PaginatedResults } from 'src/app/core/models/paginated_results_model';
-import { Company } from 'src/app/core/models/company';
+import { School } from 'src/app/core/models/school';
 import { User } from 'src/app/core/models/user';
 import { appRoutes } from 'src/app/core/routes-list';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -22,8 +22,8 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 })
 export class HeaderComponent {
   public user: User = new User(JSON.parse(localStorage.getItem('user')!));
-  public company: Company = new Company(
-    JSON.parse(localStorage.getItem('company')!)
+  public school: School = new School(
+    JSON.parse(localStorage.getItem('school')!)
   );
 
   public routes = appRoutes;
@@ -132,7 +132,7 @@ export class HeaderComponent {
   private clearLocalStorage() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
-    localStorage.removeItem('company');
+    localStorage.removeItem('school');
     localStorage.removeItem('setting');
   }
 

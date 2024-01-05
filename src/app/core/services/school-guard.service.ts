@@ -4,15 +4,15 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyGuardService {
+export class SchoolGuardService {
 
   constructor(private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (localStorage.getItem('company')) {
+    if (localStorage.getItem('school')) {
       return true;
     }
-    localStorage.removeItem('company');
+    localStorage.removeItem('school');
     this.router.navigateByUrl('/auth/login');
     return false;
   }

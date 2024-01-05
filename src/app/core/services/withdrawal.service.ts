@@ -20,7 +20,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -37,7 +37,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -63,7 +63,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -83,7 +83,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -96,7 +96,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -109,7 +109,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -122,7 +122,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -139,7 +139,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 
@@ -164,7 +164,7 @@ export class WithdrawalService {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token'),
-        CurrentCompanyUuid: JSON.parse(localStorage.getItem('company')!).uuid,
+        CurrentSchoolUuid: JSON.parse(localStorage.getItem('school')!).uuid,
       }),
     };
 

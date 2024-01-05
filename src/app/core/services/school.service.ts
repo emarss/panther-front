@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Company } from '../models/company';
+import { School } from '../models/school';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CompanyService {
+export class SchoolService {
   apiUrl = environment.apiURL;
 
   constructor(private http: HttpClient) { }
@@ -20,11 +20,11 @@ export class CompanyService {
       }),
     };
 
-    return this.http.get<Company>(this.apiUrl + '/company', options);
+    return this.http.get<School>(this.apiUrl + '/school', options);
   }
 
 
-  update(company: any) {
+  update(school: any) {
     const options = {
       headers: new HttpHeaders({
         Accept: 'application/json',
@@ -33,10 +33,10 @@ export class CompanyService {
       }),
     };
 
-    return this.http.put<Company>(this.apiUrl + `/companies`, company, options);
+    return this.http.put<School>(this.apiUrl + `/schools`, school, options);
   }
 
-  saveCompanyToLocalStorage(res: any) {
-    localStorage.setItem('company', JSON.stringify(res));
+  saveSchoolToLocalStorage(res: any) {
+    localStorage.setItem('school', JSON.stringify(res));
   }
 }

@@ -1,6 +1,6 @@
 <div>
   <app-loading-overlay *ngIf="loading"></app-loading-overlay>
-  <div *ngIf="company?.isUnverified()">
+  <div *ngIf="school?.isUnverified()">
     <div class="card card-info mb-4">
       <div class="card-body text-gray-900 p-3">
         <h3 class="fw-bold fs-5">
@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="row"
-    *ngIf="company?.hasSubscribed() == false || company?.saidHiToRose() == false || company?.settingsUpdated() == false">
+    *ngIf="school?.hasSubscribed() == false || school?.saidHiToRose() == false || school?.settingsUpdated() == false">
     <div class="col-md-4">
       <div>
         <div class="card mb-4">
@@ -30,13 +30,13 @@
               <i class="bi bi-gear fw-bold fs-4 me-2"></i>
               Finish Setting Up
             </h3>
-            <p>Review and update your account settings, including your company logo, colors, details, contact
+            <p>Review and update your account settings, including your school logo, colors, details, contact
               information
               and preferences.</p>
             <a routerLink="/settings/show"
-              class="btn btn-light {{ company?.settingsUpdated() == false ? '' : 'text-green' }} py-2">
+              class="btn btn-light {{ school?.settingsUpdated() == false ? '' : 'text-green' }} py-2">
               <i
-                class="bi {{ company?.settingsUpdated() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
+                class="bi {{ school?.settingsUpdated() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
               Update Settings</a>
           </div>
         </div>
@@ -53,10 +53,10 @@
             <p>Say Hi to Rose, your virtual assistant for Avery Cloud. She will help you with reports, notifications and
               customer support.</p>
             <button
-              class="btn btn-light {{ company?.saidHiToRose() == false ? '' : 'text-green' }} py-2"
+              class="btn btn-light {{ school?.saidHiToRose() == false ? '' : 'text-green' }} py-2"
               (click)="sayHiToRose()">
               <i
-                class="bi {{ company?.saidHiToRose() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
+                class="bi {{ school?.saidHiToRose() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
               Say Hi Rose</button>
           </div>
         </div>
@@ -73,10 +73,10 @@
             <p>Select a plan that suits your specific business needs and subscribe now to continue using Avery Cloud
               with
               no interuptions. </p>
-            <a class="btn btn-light {{ company?.hasSubscribed() == false ? '' : 'text-green' }} py-2"
+            <a class="btn btn-light {{ school?.hasSubscribed() == false ? '' : 'text-green' }} py-2"
               [routerLink]="routes.plans.show">
               <i
-                class="bi {{ company?.hasSubscribed() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
+                class="bi {{ school?.hasSubscribed() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
               Get Started</a>
           </div>
         </div>

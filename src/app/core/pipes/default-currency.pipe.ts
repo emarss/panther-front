@@ -16,8 +16,8 @@ export class DefaultCurrencyPipe implements PipeTransform {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       });
-      return formatter.format(value) + " " + this.settingService.getCurrentCompanyCurrency();
+      return formatter.format(value) + " " + this.settingService.getCurrentSchoolCurrency();
     }
-    return Number(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " " + this.settingService.getCurrentCompanyCurrency();
+    return Number(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + " " + this.settingService.getCurrentSchoolCurrency();
   }
 }

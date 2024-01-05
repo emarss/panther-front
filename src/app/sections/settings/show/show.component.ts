@@ -5,8 +5,8 @@ import { AlertService } from '../../../core/services/alert.service';
 import { Location } from '@angular/common';
 import { SettingService } from '../../../core/services/setting.service';
 import { appRoutes } from '../../../core/routes-list';
-import { CompanyService } from 'src/app/core/services/company.service';
-import { Company } from 'src/app/core/models/company';
+import { SchoolService } from 'src/app/core/services/school.service';
+import { School } from 'src/app/core/models/school';
 import { CustomSelectOption } from 'src/app/core/interfaces/custom-select-option';
 
 import { BehaviorSubject } from 'rxjs';
@@ -25,7 +25,7 @@ import { environment } from 'src/environments/environment';
 export class ShowComponent {
   public form!: FormGroup;
   public setting!: Setting;
-  public company!: Company;
+  public school!: School;
 
   public fileToUpload?: File;
   public previewUrl?: string;
@@ -58,7 +58,7 @@ export class ShowComponent {
   constructor(
     public fb: FormBuilder,
     private settingService: SettingService,
-    private companyService: CompanyService,
+    private schoolService: SchoolService,
     private _location: Location,
     private confirmDialogService: ConfirmDialogService,
     private toastService: ToastService,
@@ -100,7 +100,7 @@ export class ShowComponent {
         this.templateBaseUrl =
           environment.apiURL +
           '/settings/preview-template/' +
-          this.setting.company_uuid +
+          this.setting.school_uuid +
           '/';
         this.updateNumberOfCompletedRequests();
       },
@@ -110,10 +110,10 @@ export class ShowComponent {
       },
     });
 
-    this.companyService.show().subscribe({
-      next: (res: Company) => {
-        this.company = res;
-        this.previewUrl = this.company.logo_url;
+    this.schoolService.show().subscribe({
+      next: (res: School) => {
+        this.school = res;
+        this.previewUrl = this.school.logo_url;
         this.updateNumberOfCompletedRequests();
       },
       error: (err: any) => {
@@ -168,7 +168,7 @@ export class ShowComponent {
             this.uploadProgress = 0;
             this.loading = false;
             this.toastService.showSuccess(
-              'Company logo has been updated successfully.'
+              'School logo has been updated successfully.'
             );
         }
       });
@@ -181,7 +181,7 @@ export class ShowComponent {
 
   private initializeCreateForm() {
     this.form = this.fb.group({
-      company_name: ['', [Validators.required]],
+      school_name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       physical_address: ['', []],
       whatsapp_number: ['', [Validators.required]],
@@ -208,16 +208,16 @@ export class ShowComponent {
         [Validators.required],
       ],
       category: [
-        this.mapBusinessCategory(this.company?.category),
+        this.mapBusinessCategory(this.school?.category),
         [Validators.required],
       ],
-      bp_number: [this.company?.bp_number, []],
-      vat_number: [this.company?.vat_number, []],
-      company_name: [this.company.company_name, [Validators.required]],
-      email: [this.company.email, [Validators.required]],
-      physical_address: [this.company.physical_address, []],
-      whatsapp_number: [this.company.whatsapp_number, [Validators.required]],
-      phone_number: [this.company.phone_number, [Validators.required]],
+      bp_number: [this.school?.bp_number, []],
+      vat_number: [this.school?.vat_number, []],
+      school_name: [this.school.school_name, [Validators.required]],
+      email: [this.school.email, [Validators.required]],
+      physical_address: [this.school.physical_address, []],
+      whatsapp_number: [this.school.whatsapp_number, [Validators.required]],
+      phone_number: [this.school.phone_number, [Validators.required]],
       purchase_order_due_date: [
         this.setting.purchase_order_due_date,
         [Validators.required],
@@ -278,7 +278,7 @@ export class ShowComponent {
     }
     this.confirmDialogService.showConfirmDialog({
       title: 'Confirm Delete',
-      message: `Are you sure you want to delete the company logo?`,
+      message: `Are you sure you want to delete the school logo?`,
       actionText: 'Delete',
       actionBtnClass: 'btn-danger',
       action: () => {
@@ -289,7 +289,7 @@ export class ShowComponent {
             this.previewUrl = undefined;
             this.fileToUpload = undefined;
             this.toastService.showSuccess(
-              'Company logo has been deleted successfully.'
+              'School logo has been deleted successfully.'
             );
           },
           error: (err: any) => {
@@ -315,10 +315,10 @@ export class ShowComponent {
       return;
     }
 
-    const companyData = {
+    const schoolData = {
       currency: this.form.get('currency')?.value.value,
       category: this.form.get('category')?.value.value,
-      company_name: this.form.get('company_name')?.value,
+      school_name: this.form.get('school_name')?.value,
       email: this.form.get('email')?.value,
       physical_address: this.form.get('physical_address')?.value,
       whatsapp_number: this.form.get('whatsapp_number')?.value,
@@ -346,7 +346,7 @@ export class ShowComponent {
     };
 
     this.loading = true;
-    this.settingService.update(companyData).subscribe({
+    this.settingService.update(schoolData).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.toastService.showSuccess(
