@@ -1,0 +1,47 @@
+@import '../../../assets/scss/variables.scss';
+
+.login {
+  height: 100vh;
+  width: calc(100% - 12px);
+
+
+  .logo {
+    width: 300px;
+  }
+
+  .form-container {
+    width: 450px;
+
+    .btn-outline {
+      border-color: $body-background-color-2;
+
+      .icon {
+        width: 22px;
+      }
+    }
+  }
+
+  .logo-container {
+    background-color: $primary-color-1;
+    height: 100vh;
+    text-align: center;
+
+    .logo-container-inner {
+      width: calc(100% - 40px);
+      max-width: 600px;
+    }
+
+    .screenshot {
+      width: calc(100% - 40px);
+      max-width: 600px;
+
+      img {
+        max-width: 100%;
+      }
+    }
+
+    .caption p {
+      max-width: 600px;
+    }
+  }
+}

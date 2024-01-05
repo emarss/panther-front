@@ -1,0 +1,71 @@
+@import '../../../assets/scss/variables.scss';
+
+.btn {
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+  align-items: center;
+  background-color: #fff;
+  color: #5E6278;
+}
+
+.items-container {
+  border: 1px solid $body-background-color-2 !important;
+}
+
+
+.btn.with-value {
+  padding: 0.3rem;
+  padding-left: 0.3rem !important;
+}
+
+.selected-container {
+  display: block;
+
+  .selected {
+    border: 1px solid $body-background-color-2;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: flex;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 2px;
+    align-items: center;
+    margin-top: 2px;
+
+    i.bi {
+      padding-left: 4px;
+      font-size: 17px;
+    }
+  }
+}
+
+.results {
+  max-height: 135px;
+  overflow-y: auto;
+  min-height: 35px;
+
+  .active {
+    background-color: $body-background-color-2;
+    margin-bottom: 1px;
+  }
+}
+
+.results::-webkit-scrollbar-thumb {
+  background-color: $body-background-color-2;
+  cursor: pointer !important;
+  border-radius: 2px;
+}
+
+.results::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.results::-webkit-scrollbar {
+  width: 5px;
+}
+
+.dropdown-menu {
+  padding: 0;
+}

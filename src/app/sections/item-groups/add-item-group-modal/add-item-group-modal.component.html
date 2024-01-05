@@ -1,0 +1,42 @@
+<div class="card w-100">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <div class="card-title m-0">
+    <h3 class="fw-bold m-0 p-4 fs-6">Create New Item Group</h3>
+  </div>
+
+  <form class="form" [formGroup]="form">
+    <div class="card-body border-top p-4">
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Item Group Name</label>
+        <div class="col-lg-8">
+          <input type="text" name="name" required="" formControlName="name"
+            class="form-control form-control-lg mb-3 mb-lg-0" placeholder="Enter item group name" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'name'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Description</label>
+        <div class="col-lg-8">
+          <input type="text" name="description" formControlName="description" class="form-control form-control-lg"
+            placeholder="Enter item group description" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'description'">
+          </app-validation-message>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer d-flex justify-content-end py-4">
+      <button type="reset" class="btn btn-lg btn-light me-2">Discard</button>
+      <button (click)="save()" class="btn btn-lg btn-primary">
+        <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+        <span *ngIf="loading">
+          <app-spinner></app-spinner> Please, wait ...
+        </span>
+      </button>
+    </div>
+
+
+  </form>
+</div>

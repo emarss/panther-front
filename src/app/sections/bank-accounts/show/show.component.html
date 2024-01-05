@@ -1,0 +1,128 @@
+<app-page-loading-overlay *ngIf="bankAccount == null"></app-page-loading-overlay>
+<div *ngIf="bankAccount != null">
+  <div class="d-flex justify-content-between mb-4 w-100">
+    <div class="d-flex flex-column me-3">
+      <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ bankAccount.bank_name }}</h1>
+      <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+        <li class="breadcrumb-item text-gray-600">
+          <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-600">
+          <a routerLink="{{ routes.administration.bank_accounts.index }}"
+            class="text-gray-600 fs-8 text-hover-primary">Bank
+            Accounts</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-500">Show Bank Account</li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center py-2 py-md-1">
+      <button (click)="backClicked()" class="btn btn-lg btn-light">
+        <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+      </button>
+    </div>
+  </div>
+  <div class="card w-100 mb-5">
+    <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card-title m-0">
+          <h3 class="fw-bold m-0 p-4 fs-6">Bank account Details</h3>
+        </div>
+        <div class="card-body border-top p-4">
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Title</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ bankAccount.title }}" disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Bank Name</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ bankAccount.bank_name }}"
+                disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Account Holder</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ bankAccount.account_holder }}"
+                disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Bank Account</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ bankAccount.bank_account }}"
+                disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Bank Branch</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid"
+                value="{{ bankAccount.bank_branch ?? '--' }}" disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Account Status</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ bankAccount.status }}" disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Priority</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ bankAccount.priority }}"
+                disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 border-start">
+        <div class="card-title m-0">
+          <h3 class="fw-bold m-0 p-4 fs-6">More Info</h3>
+        </div>
+        <div class="card-body border-top p-4">
+          <div class="row mb-3 d-flex justify-content-between align-items-center">
+            <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created By</label>
+            <div class="col-xxl-8 d-flex justify-content-between align-items-center">
+              <span class="fw-semibold text-gray-800">{{
+                bankAccount.user?.name
+              }}</span>
+              <a class="" [routerLink]="[routes.administration.users.show, bankAccount.user?.uuid]">
+                <i class="bi bi-box-arrow-up-right fw-bold"></i>
+              </a>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created At</label>
+            <div class="col-xxl-8">
+              <span class="fw-semibold text-gray-800">{{
+                bankAccount.date_created | date: "d MMM, yyyy HH:mm:ss"
+              }}</span>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Last Updated</label>
+            <div class="col-xxl-8">
+              <span class="fw-semibold text-gray-800">{{
+                bankAccount.date_updated | date: "d MMM, yyyy HH:mm:ss"
+              }}</span>
+            </div>
+          </div>
+          <hr />
+          <div class="d-flex align-items-center py-2 py-md-1">
+            <button appPermission [permissionArray]="[['bank_accounts', 4]]" (click)="confirmDelete()"
+              class="btn btn-lg btn-danger me-2">
+              <i class="bi bi-trash me-2 mt-1"></i> Delete
+            </button>
+            <a appPermission [permissionArray]="[['bank_accounts', 3]]"
+              [routerLink]="[routes.administration.bank_accounts.edit, bankAccount.uuid]"
+              class="btn btn-lg btn-primary">
+              <i class="bi bi-pencil-square me-2 mt-1"></i> Edit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<app-page-loading-overlay *ngIf="itemGroup == null" [showMenu]="true"></app-page-loading-overlay>
+<div *ngIf="itemGroup != null">
+  <div class="d-flex justify-content-between mb-4 w-100">
+    <div class="d-flex flex-column me-3">
+      <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ itemGroup.name }}</h1>
+      <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+        <li class="breadcrumb-item text-gray-600">
+          <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-600">
+          <a routerLink="{{ routes.administration.item_groups.index }}" class="text-gray-600 fs-8 text-hover-primary">Item
+            Groups</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-500">Show Item Group</li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center py-2 py-md-1">
+      <button (click)="backClicked()" class="btn btn-lg btn-light">
+        <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+      </button>
+    </div>
+  </div>
+  <app-item-group-show-menu [itemGroup]="itemGroup"></app-item-group-show-menu>
+  <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+</div>

@@ -1,0 +1,3 @@
+<span *ngIf="currency != defaultCurrency ||  exchange_rate != 1"
+  class="ps-2">({{ amount / exchange_rate! | currency: currency : '' }}
+  {{ currency }})</span>

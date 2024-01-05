@@ -1,0 +1,71 @@
+<nav class="navbar navbar-dark navbar-expand-md position-fixed w-100 ">
+  <div class="container">
+    <img src="../../../assets/images/logo-long-white.png" alt="Logo" height="50" class="d-inline-block align-text-top">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link text-white" [routerLink]="routes.subscriptions.index">
+            <i class="bi bi-stripe fw-semibold"></i>
+          </a>
+        </li>
+        <div class="nav-item d-flex align-items-center">
+          <a class="nav-link notification text-white" [routerLink]="routes.notifications.index">
+            <i class="bi bi-bell fw-bold"></i>
+            <span *ngIf="unseenNotificationsCount > 0" class="badge bg-danger">{{ unseenNotificationsCount }}</span>
+          </a>
+        </div>
+        <div class="nav-item d-flex align-items-center me-3">
+          <a class="nav-link text-white" [routerLink]="routes.help.index">
+            <i class="bi bi-question-square fw-bold"></i>
+          </a>
+        </div>
+        <li class="nav-item ps-3 border-start border-secondary">
+          <div class="d-inline-block switch-company-dropdown" ngbDropdown #profileDrop="ngbDropdown">
+            <a class="nav-link user-icon me-0" href="javascript:void(0)" id="profileDropdown" ngbDropdownAnchor
+              (focus)="profileDrop.open()">
+              <div class="d-flex align-items-center">
+                <div class="text-end justify-content-center me-3">
+                  <div class="text-gray-200 fs-8 fw-semibold lh-1 mb-1">
+                    {{ user.name }}</div>
+                  <div class="text-white fs-8 fw-bold lh-1">{{ company.company_name }}</div>
+                </div>
+                <i class="bi bi-person-gear"></i>
+              </div>
+            </a>
+            <div ngbDropdownMenu aria-labelledby="profileDropdown" class="profile-dropdown dropdown-menu-end">
+              <div class="fw-bold py-1 px-3">
+                <div class="d-flex align-items-center">
+                  <div class="me-2 user-icon">
+                    <i class="bi bi-person"></i>
+                  </div>
+                  <div class="d-flex flex-column" style="width: calc(100% - 50px)">
+                    <div class="fw-bold text-truncate d-flex align-items-center fs-7">{{ user.name }}</div>
+                    <a [routerLink]="routes.administration.users.profile"
+                      class="text-muted text-truncate text-hover-primary fs-8">{{ user.email }}</a>
+                  </div>
+                </div>
+              </div>
+              <hr class="dropdown-divider">
+              <div class="px-2"> <a [routerLink]="routes.administration.users.profile" class="px-2" ngbDropdownItem>My
+                  Profile</a></div>
+              <!-- <hr class="dropdown-divider">
+              <div class="px-2"> <button class="px-2" ngbDropdownItem>Lock Account</button></div> -->
+              <div class="px-2"> <a class="px-2" ngbDropdownItem (click)="logout()">Logout</a></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div *ngIf="loggingOut" class="loading-overlay">
+  <app-loading-gif-image></app-loading-gif-image>
+</div>
+<div *ngIf="loggingOut || loading" class="loading-bar">
+  <ngb-progressbar [height]="'8px'" [style]="'border-radius: 0'" type="primary" [value]="100" [striped]="true"
+    [animated]="true"></ngb-progressbar>
+</div>

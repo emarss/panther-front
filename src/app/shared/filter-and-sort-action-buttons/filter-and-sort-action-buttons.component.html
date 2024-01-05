@@ -1,0 +1,38 @@
+<div class="d-flex">
+  <div *ngIf="showFilter" class="me-2" ngbDropdown role="group" aria-label="Button group with nested dropdown" container="body"
+    display="dynamic" placement="bottom-end">
+    <button type="button" class="btn btn-lg btn-primary" ngbDropdownToggle>
+      <i class="bi bi-funnel-fill fw-semibold"></i>
+      <span class="ms-2">
+        {{ paginationOptions.filter.replace('_', ' ')| titlecase }}
+      </span>
+      <span>
+        <img src="../../../assets/icons/caret-white.svg" alt="">
+      </span>
+    </button>
+    <div class="dropdown-menu" ngbDropdownMenu>
+      <button (click)="toggleFilter()"
+        class="{{ paginationOptions.filter == 'trashed' ? 'text-primary fw-bold' : '' }}"
+        ngbDropdownItem>Trashed</button>
+      <button (click)="toggleFilter()"
+        class="{{ paginationOptions.filter == 'not_trashed' ? 'text-primary fw-bold' : '' }}"
+        ngbDropdownItem>Not Trashed</button>
+    </div>
+  </div>
+  <div class="me-2" ngbDropdown role="group" container="body" display="dynamic" placement="bottom-end">
+    <button type="button" class="btn btn-lg btn-primary" ngbDropdownToggle>
+      <i class="bi bi-sort-up-alt fw-semibold"></i>
+      <span class="ms-2">
+        {{ getColumnName(paginationOptions.sort) | titlecase }} ({{ paginationOptions.direction | uppercase }})
+      </span>
+      <span>
+        <img src="../../../assets/icons/caret-white.svg" alt="">
+      </span>
+    </button>
+    <div class="dropdown-menu" ngbDropdownMenu>
+      <button *ngFor="let column of sortColumns" (click)="changeSort(column)"
+        class="{{ paginationOptions.sort == column ? 'text-primary fw-bold' : '' }}"
+        ngbDropdownItem>{{ getColumnName(column) | titlecase }}</button>
+    </div>
+  </div>
+</div>

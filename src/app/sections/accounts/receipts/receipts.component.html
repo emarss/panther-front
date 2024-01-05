@@ -1,0 +1,152 @@
+<div *ngIf="account != null">
+  <div class="card w-100 mb-5">
+    <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+    <div class="card-body">
+      <h5 class="card-title mb-3 d-flex justify-content-between">
+        <div class="search-form">
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="bi bi-search fw-bold"></i>
+            </span>
+            <input (keydown.enter)="search()" type="search" [(ngModel)]="searchKey"
+              placeholder="Search Account Receipts..." class="form-control form-control-solid ps-0" aria-label="Search"
+              aria-describedby="addon-wrapping" />
+            <button (click)="search()" class="btn btn-lg btn-primary text-white fw-bold">
+              Search
+            </button>
+          </div>
+        </div>
+        <div class="w-50 d-flex justify-content-end align-items-center">
+          <div ngbDropdown display="dynamic" placement="bottom-end"> <button type="button"
+              class="btn btn-primary text-white py-2 fw-bold" ngbDropdownToggle>
+              <i class="bi bi-box-arrow-up-right fw-semibold me-2"></i> Export
+              <span class="ms-2">
+                <img src="../../../assets/icons/caret-white.svg" alt="">
+              </span>
+            </button>
+            <div ngbDropdownMenu>
+              <button (click)="exportData('csv')" ngbDropdownItem>Export CSV</button>
+              <button (click)="exportData('xlsx')" ngbDropdownItem>Export Excel</button>
+            </div>
+          </div>
+        </div>
+      </h5>
+      <div class="table-responsive">
+        <table class="table align-middle table-hover table-row-dashed fs-8 no-footer">
+          <thead>
+            <tr class="text-start text-gray-800 fs-8 text-uppercase">
+              <th class="pb-3 fw-bold">
+                <ng-template #numberCol [ngTemplateOutlet]="numberCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'number' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Number
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                        paginationOptions.directionIsAsc()
+                          ? 'bi-sort-up'
+                          : 'bi-sort-down'
+                      }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold">
+                <ng-template #supplierCol [ngTemplateOutlet]="supplierCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'supplier' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">supplier | Supplier
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                        paginationOptions.directionIsAsc()
+                          ? 'bi-sort-up'
+                          : 'bi-sort-down'
+                      }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold">
+                <ng-template #categoryCol [ngTemplateOutlet]="categoryCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'category' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Category
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                        paginationOptions.directionIsAsc()
+                          ? 'bi-sort-up'
+                          : 'bi-sort-down'
+                      }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold">
+                <ng-template #amountCol [ngTemplateOutlet]="amountCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'amount' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Amount
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                        paginationOptions.directionIsAsc()
+                          ? 'bi-sort-up'
+                          : 'bi-sort-down'
+                      }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="fw-semibold text-gray-700">
+            <tr *ngIf="accountReceiptsList?.length === 0 && loading == false">
+              <td colspan="7" class="py-5 text-center">No results found</td>
+            </tr>
+            <tr class="odd" *ngFor="let receipt of accountReceiptsList">
+              <td>{{ '#' + receipt.number }}</td>
+              <td *ngIf="receipt.supplier">{{ receipt.supplier.name }}</td>
+              <td>{{ receipt.category }}</td>
+              <td>{{ receipt.amount | currency: receipt.currency : '' }}
+                {{ receipt.currency }}</td>
+              <td class="d-flex justify-content-end">
+                <a [routerLink]="[
+                    routes.financials.receipts.show,
+                    receipt.uuid
+                  ]" class="btn btn-light btn-lg me-2 fw-bold">
+                  <i class="bi bi-eye me-2 fw-semibold"></i> Show
+                </a>
+                <div ngbDropdown appPermission [permissionArray]="[['receipts', 3],['receipts',4]]" container="body"
+                  display="dynamic" placement="bottom-end">
+                  <button type="button" class="btn btn-light btn-lg fw-bold" ngbDropdownToggle>
+                    <i class="bi bi-three-dots me-2 fw-bold"></i> More
+                    <span class="ms-2">
+                      <img src="../../../assets/icons/caret.svg" alt="" />
+                    </span>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a [routerLink]="[
+                        routes.financials.receipts.edit,
+                        receipt.uuid
+                      ]" appPermission [permissionArray]="[['receipts', 3]]" ngbDropdownItem>Edit</a>
+                    <button ngbDropdownItem appPermission [permissionArray]="[['receipts', 4]]"
+                      (click)="confirmDeleteReceipt(receipt)">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+          <div class="w-auto" *ngIf="paginatedResults">
+            <app-pagination-select [(ngModel)]="paginatedResults.per_page" [options]="[6,10,20,100, 'ALL']"
+              [selectedOption]="paginatedResults.per_page" (ngModelChange)="onPerPageChanged()">
+            </app-pagination-select>
+          </div>
+          <div *ngIf="paginatedResults">
+            <ngb-pagination [collectionSize]="paginatedResults.total" [(page)]="paginatedResults.current_page"
+              [pageSize]="paginatedResults.per_page" [rotate]="true" [boundaryLinks]="true" [maxSize]="5"
+              (pageChange)="onPageNumberChanged()">
+              <ng-template ngbPaginationFirst>First</ng-template>
+              <ng-template ngbPaginationLast>Last</ng-template>
+              <ng-template ngbPaginationPrevious>Prev</ng-template>
+              <ng-template ngbPaginationNext>Next</ng-template>
+              <ng-template ngbPaginationEllipsis>...</ng-template>
+              <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

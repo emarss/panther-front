@@ -1,0 +1,7 @@
+<div class="modal-header" ngbAutofocus>
+  <h4 class="modal-title">{{ title }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+</div>
+<div class="modal-body">
+  <div class="{{ childClass }}" [innerHTML]="content | safe: 'html'"></div>
+</div>

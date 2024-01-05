@@ -1,0 +1,377 @@
+<div class="d-flex justify-content-between mb-4 w-100">
+  <div class="d-flex flex-column me-3">
+    <h1 class="d-flex text-dark fw-bold my-1 fs-5">Update Settings</h1>
+    <ul
+      class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+      <li class="breadcrumb-item text-gray-600">
+        <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-600">
+        <a routerLink="{{ routes.settings.show }}"
+          class="text-gray-600 fs-8 text-hover-primary">Settings</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-500">Update Settings</li>
+    </ul>
+  </div>
+  <div class="d-flex align-items-center py-2 py-md-1">
+    <button (click)="backClicked()" class="btn btn-lg btn-light">
+      <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+    </button>
+  </div>
+</div>
+<div class="card w-100 mb-5">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+
+  <form class="form" [formGroup]="form">
+    <div class="card-body p-4">
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Company Logo</h3>
+      <hr />
+      <div class="row mb-4">
+        <div class="col-lg-12">
+          <div class="card">
+            <app-loading-overlay [showProgress]="true"
+              [progress]="uploadProgress" *ngIf="loading">
+            </app-loading-overlay>
+            <form class="form">
+              <div class="card-body p-0">
+                <div class="card pt-0">
+                  <div
+                    class="card-body cursor-pointer d-flex justify-content-center align-items-center mb-3 pt-0"
+                    style="height: 150px;" (click)="file.click()">
+                    <i *ngIf="!previewUrl" class="bi bi-image fs-1"></i>
+                    <img *ngIf="previewUrl"
+                      [src]="previewUrl | safe : 'resourceUrl'"
+                      style="max-width: 100%; max-height: 100%;"
+                      class="rounded-1">
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-lg-12">
+                    <input #file type="file" name="file" accept="image/*"
+                      (change)="handleFileInput($event)"
+                      class="form-control form-control-lg"
+                      placeholder="Enter facebook media name" />
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <div class="border-top mt-4 d-flex justify-content-end py-4">
+                    <button (click)="delete()"
+                      class="btn btn-lg btn-danger me-2">
+                      <span *ngIf="!loading"> <i
+                          class="bi bi-x-square fw-semibold me-2"></i> Remove
+                        Logo</span>
+                      <span *ngIf="loading">
+                        <app-spinner></app-spinner> Please, wait ...
+                      </span>
+                    </button>
+                    <button (click)="save()" class="btn btn-lg btn-primary">
+                      <span *ngIf="!loading"> <i
+                          class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+                      <span *ngIf="loading">
+                        <app-spinner></app-spinner> Please, wait ...
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Primary Color</h3>
+      <hr />
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Select Primary
+          Documents Color</label>
+        <div class="col-lg-12">
+          <input type="color" name="document_color"
+            formControlName="document_color"
+            class="form-control form-control-lg"
+            placeholder="Select docucument color" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'document_color'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="border-top mt-4 d-flex justify-content-end py-4">
+        <button (click)="save()" class="btn btn-lg btn-primary">
+          <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i>
+            Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </div>
+      <!--
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Document Template</h3>
+      <hr />
+      <div class="row mb-4">
+        <div class="col-lg-12">
+          <div class="card">
+            <ngb-carousel *ngIf="this.form.get('document_template_id')?.value"
+              [activeId]="'template_' +this.form.get('document_template_id')?.value" [interval]="0"
+              (slid)="onTemplateChanged($event)">
+              <ng-template ngbSlide [id]="'template_1'">
+                <div class="template-img-wrapper">
+                  <embed [src]="templateBaseUrl + '1#toolbar=0&view=Fit&scrollbar=0' | safe : 'resourceUrl'"
+                    type="application/pdf" frameBorder="0" height="100%">
+                </div>
+              </ng-template>
+              <ng-template ngbSlide [id]="'template_2'">
+                <div class="template-img-wrapper">
+                  <embed [src]="templateBaseUrl + '2#toolbar=0&view=Fit&scrollbar=0' | safe : 'resourceUrl'"
+                    type="application/pdf" frameBorder="0" height="100%">
+                </div>
+              </ng-template>
+            </ngb-carousel>
+            <div class="mb-2">
+              <div class="border-top mt-4 d-flex justify-content-end py-4">
+                <button (click)="save()" class="btn btn-lg btn-primary">
+                  <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+                  <span *ngIf="loading">
+                    <app-spinner></app-spinner> Please, wait ...
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <h3 class="fw-bold m-0 py-2 fs-7">Basic Company Info</h3>
+      <hr />
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Company Name</label>
+        <div class="col-lg-12">
+          <input type="text" name="company_name" required
+            formControlName="company_name"
+            class="form-control form-control-lg mb-3 mb-lg-0"
+            placeholder="Enter company name" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'company_name'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Company
+          Category</label>
+        <div class="col-lg-12">
+          <app-custom-select formControlName="category"
+            [title]="'Select Business Category'"
+            [options]="businessCategories"></app-custom-select>
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'category'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">BP Number
+          <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-12">
+          <input type="text" name="bp_number" formControlName="bp_number"
+            class="form-control form-control-lg"
+            placeholder="Enter company business partner number" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'bp_number'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">VAT Number
+          <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-12">
+          <input type="text" name="vat_number" formControlName="vat_number"
+            class="form-control form-control-lg"
+            placeholder="Enter company VAT Number" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'vat_number'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Contact Information</h3>
+      <hr />
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Whatsapp Number</label>
+        <div class="col-lg-12">
+          <input type="text" name="whatsapp_number"
+            formControlName="whatsapp_number"
+            class="form-control form-control-lg"
+            placeholder="Enter whatsapp number" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'whatsapp_number'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Mobile Number</label>
+        <div class="col-lg-12">
+          <input type="text" name="phone_number" formControlName="phone_number"
+            class="form-control form-control-lg"
+            placeholder="Enter phone number" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'phone_number'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Email Address
+        </label>
+        <div class="col-lg-12">
+          <input type="email" name="email" formControlName="email"
+            class="form-control form-control-lg"
+            placeholder="Enter email address" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'email'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Physical
+          Address <app-optional-label>
+          </app-optional-label></label>
+        <div class="col-lg-12">
+          <input type="text" name="physical_address"
+            formControlName="physical_address"
+            class="form-control form-control-lg"
+            placeholder="Enter physical address" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'physical_address'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="border-top mt-4 d-flex justify-content-end py-4">
+
+        <button (click)="save()" class="btn btn-lg btn-primary">
+          <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i>
+            Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </div>
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">System Preferences</h3>
+      <hr />
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Selected
+          Default Currency</label>
+        <div class="col-lg-12">
+          <app-custom-select formControlName="currency" [isDisabled]="true"
+            [title]="'Select Default Currency'"
+            [options]="currencies">
+          </app-custom-select>
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors" [field]="'currency'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="border-top mt-4 d-flex justify-content-end py-4">
+
+        <button (click)="save()" class="btn btn-lg btn-primary">
+          <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i>
+            Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </div>
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Documents General Preferences</h3>
+      <hr />
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Show Business
+          VAT Number On Documents</label>
+        <div class="col-lg-12">
+          <app-custom-select formControlName="document_show_business_vat_number"
+            [title]="'Select Option'"
+            [options]="trueOrFalseOptions">
+          </app-custom-select>
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors"
+            [field]="'document_show_business_vat_number'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Show Business
+          BP Number On Documents</label>
+        <div class="col-lg-12">
+          <app-custom-select formControlName="document_show_business_bp_number"
+            [title]="'Select Option'"
+            [options]="trueOrFalseOptions">
+          </app-custom-select>
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors"
+            [field]="'document_show_business_bp_number'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Show Banking
+          Details On Documents</label>
+        <div class="col-lg-12">
+          <app-custom-select formControlName="document_show_banking_details"
+            [title]="'Select Option'"
+            [options]="trueOrFalseOptions">
+          </app-custom-select>
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors"
+            [field]="'document_show_banking_details'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="border-top mt-4 d-flex justify-content-end py-4">
+        <button (click)="save()" class="btn btn-lg btn-primary">
+          <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i>
+            Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </div>
+
+      <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Documents Default Due in Days</h3>
+      <hr />
+      <div class="row mb-4">
+        <label class="col-lg-12 col-form-label fw-semibold fs-8">Purchase Order
+          Due in Days </label>
+        <div class="col-lg-12">
+          <input type="text" name="purchase_order_due_date"
+            formControlName="purchase_order_due_date"
+            class="form-control form-control-lg mb-3 mb-lg-0"
+            placeholder="Enter purchase order due number of days" />
+          <app-validation-message [form]="form"
+            [showErrors]="showValidationErrors"
+            [field]="'purchase_order_due_date'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="border-top mt-4 d-flex justify-content-end py-4">
+        <button (click)="save()" class="btn btn-lg btn-primary">
+          <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i>
+            Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </div>
+      <div class="border-top mt-4 d-flex justify-content-end py-4">
+
+        <button (click)="save()" class="btn btn-lg btn-primary">
+          <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i>
+            Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

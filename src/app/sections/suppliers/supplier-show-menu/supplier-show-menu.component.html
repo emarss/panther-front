@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-between mb-4 w-100">
+  <div class="d-flex flex-column me-3">
+    <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ supplier.name | truncate }}</h1>
+    <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+      <li class="breadcrumb-item text-gray-600">
+        <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-600">
+        <a routerLink="{{ routes.people.suppliers.index }}" class="text-gray-600 fs-8 text-hover-primary">Suppliers</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-500">Show Supplier</li>
+    </ul>
+  </div>
+  <div class="d-flex align-items-center py-2 py-md-1">
+    <a [routerLink]="[routes.inventory.purchase_orders.create_for_supplier, supplier.uuid]" appPermission
+      [permissionArray]="[['purchase_orders', 3]]" class="btn btn-lg btn-primary me-2">
+      <i class="bi bi-plus-lg fw-bold me-2"></i> New Purchase Order</a>
+      // TODO:
+    <div ngbDropdown appPermission [permissionArray]="[['contact_persons', 3]]" container="body" display="dynamic"
+      placement="bottom-end">
+      <button type="button" class="btn btn-primary me-2 btn-lg fw-bold" ngbDropdownToggle>
+        <i class="bi bi-three-dots mt-1 me-2"></i> More
+        <span class="ms-2">
+          <img src="../../../assets/icons/caret-white.svg" alt="" />
+        </span>
+      </button>
+      <div ngbDropdownMenu>
+        <a [routerLink]="[routes.people.contact_persons.create_for_supplier, supplier.uuid]" appPermission
+          [permissionArray]="[['suppliers', 3]]" ngbDropdownItem>Add
+          Contact Person</a>
+        <a [routerLink]="[routes.financials.payments.create_for_supplier, supplier.uuid]" appPermission
+          [permissionArray]="[['payments', 3]]" ngbDropdownItem>Add
+          New Payment</a>
+      </div>
+    </div>
+    <button (click)="backClicked()" class="btn btn-lg btn-light">
+      <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+    </button>
+  </div>
+</div>
+<div class="card av-nav w-100 mb-3">
+  <div class="card-body py-0">
+    <ul class="nav py-0">
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsShow() ? 'active' : '' }}"
+          [routerLink]="[routes.people.suppliers.show, supplier.uuid]">Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsContactPersons() ? 'active' : '' }}"
+          [routerLink]="[routes.people.suppliers.contact_persons, supplier.uuid]">Contact Persons</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsPayments() ? 'active' : '' }}"
+          [routerLink]="[routes.people.suppliers.payments, supplier.uuid]">Payments</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsRefunds() ? 'active' : '' }}"
+          [routerLink]="[routes.people.suppliers.refunds, supplier.uuid]">Refunds</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsPurchaseOrders() ? 'active' : '' }}"
+          [routerLink]="[routes.people.suppliers.purchase_orders, supplier.uuid]">Purchase Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsStatement() ? 'active' : '' }}"
+          [routerLink]="[routes.people.suppliers.statement, supplier.uuid]">Statement</a>
+      </li>
+    </ul>
+  </div>
+</div>

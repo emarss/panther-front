@@ -1,0 +1,40 @@
+@import '../../../assets/scss/variables.scss';
+
+.btn {
+  padding: 0.7rem 1rem !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+  background-color: #fff;
+  border: 1px solid $body-background-color-2 !important;
+  color: #5E6278;
+}
+
+.results {
+  max-height: 135px;
+  overflow-y: auto;
+
+  .active {
+    background-color: $body-background-color-2;
+    margin-bottom: 1px;
+  }
+}
+
+// .results::-webkit-scrollbar-thumb {
+//   background-color: $body-background-color-2;
+//   cursor: pointer !important;
+//   border-radius: 2px;
+// }
+
+// .results::-webkit-scrollbar-track {
+//   background-color: transparent;
+//   border-radius: 2px;
+// }
+
+// .results::-webkit-scrollbar {
+//   width: 5px;
+// }
+
+.dropdown-menu {
+  padding: 0;
+}

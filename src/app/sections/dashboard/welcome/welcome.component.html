@@ -1,0 +1,87 @@
+<div>
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <div *ngIf="company?.isUnverified()">
+    <div class="card card-info mb-4">
+      <div class="card-body text-gray-900 p-3">
+        <h3 class="fw-bold fs-5">
+          <i class="bi bi-hand-thumbs-up fw-bold fs-4 me-2"></i>
+          Welcome to Avery Cloud - the ultimate business solution.
+        </h3>
+        <p>Avery Cloud provides everything businesses need to stay organized and on top of their game. And with its web
+          app for desktop devices, mobile app for Android, and WhatsApp chatbot, Avery Cloud is accessible from
+          anywhere, at any time.</p>
+        <div class="bg-white p-3 rounded-1">
+          <h5>Verify Email Address</h5>
+          <p>To continue using Avery Cloud, please check your email inbox for a verification email from us. Click on the
+            verification link to confirm your email address and activate your account. </p>
+          <button class="btn btn-light py-2" (click)="resendVerificationEmail()">
+            <i class="bi bi-clock-history fw-semibold me-2"></i> Resend Verification Email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row"
+    *ngIf="company?.hasSubscribed() == false || company?.saidHiToRose() == false || company?.settingsUpdated() == false">
+    <div class="col-md-4">
+      <div>
+        <div class="card mb-4">
+          <div class="card-body text-gray-900 p-3">
+            <h3 class="fw-bold fs-5">
+              <i class="bi bi-gear fw-bold fs-4 me-2"></i>
+              Finish Setting Up
+            </h3>
+            <p>Review and update your account settings, including your company logo, colors, details, contact
+              information
+              and preferences.</p>
+            <a routerLink="/settings/show"
+              class="btn btn-light {{ company?.settingsUpdated() == false ? '' : 'text-green' }} py-2">
+              <i
+                class="bi {{ company?.settingsUpdated() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
+              Update Settings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <div class="card mb-4">
+          <div class="card-body text-gray-900 p-3">
+            <h3 class="fw-bold fs-5">
+              <i class="bi bi-whatsapp fw-bold fs-4 me-2"></i>
+              Say Hi to Rose
+            </h3>
+            <p>Say Hi to Rose, your virtual assistant for Avery Cloud. She will help you with reports, notifications and
+              customer support.</p>
+            <button
+              class="btn btn-light {{ company?.saidHiToRose() == false ? '' : 'text-green' }} py-2"
+              (click)="sayHiToRose()">
+              <i
+                class="bi {{ company?.saidHiToRose() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
+              Say Hi Rose</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <div class="card mb-4">
+          <div class="card-body text-gray-900 p-3">
+            <h3 class="fw-bold fs-5">
+              <i class="bi bi-hand-index fw-bold fs-4 me-2"></i>
+              Subscribe Now
+            </h3>
+            <p>Select a plan that suits your specific business needs and subscribe now to continue using Avery Cloud
+              with
+              no interuptions. </p>
+            <a class="btn btn-light {{ company?.hasSubscribed() == false ? '' : 'text-green' }} py-2"
+              [routerLink]="routes.plans.show">
+              <i
+                class="bi {{ company?.hasSubscribed() == false ? 'bi-clock-history' : 'bi-check-all' }}  fw-semibold me-2"></i>
+              Get Started</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

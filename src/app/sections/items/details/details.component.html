@@ -1,0 +1,149 @@
+<app-page-loading-overlay *ngIf="item == null" [showMenu]="true"></app-page-loading-overlay>
+<div *ngIf="item != null" class="card w-100 mb-5">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card-title m-0">
+        <h3 class="fw-bold m-0 p-4 fs-6">Item Details</h3>
+      </div>
+      <div class="card-body border-top p-4">
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Description</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid" value="{{ item.description }}" disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Code</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ item.code === null || item.code === '' ? '--' : item.code }}"
+              disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Items in Stock</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ item.quantity ?? '--' }}" disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Type</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid" value="{{ item.type }}" disabled />
+          </div>
+        </div>
+
+
+        <h3 class="fw-bold mt-4 py-2 fs-7">Pricing Information</h3>
+        <hr />
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Unit Selling Price</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ item.unit_selling_price | currency: current_currency : '' }} {{ current_currency }}"
+              disabled />
+          </div>
+        </div>
+        <div *ngIf="item.unit_buying_price" class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Unit Buying Price</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ item.unit_buying_price | currency: current_currency : '' }} {{ current_currency }}"
+              disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Tax</label>
+          <div class="col-lg-8">
+            <div class="input-group flex-nowrap">
+              <input class="form-control form-control-lg form-control-solid" value="{{ item.tax?.name }}" disabled />
+              <a class="input-group-text bg-primary text-white border-primary"
+                [routerLink]="[routes.administration.taxes.show, item.tax?.uuid]">
+                <i class="bi bi-box-arrow-up-right fw-bold"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="fw-bold mt-4 py-2 fs-7">Other Information</h3>
+        <hr />
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Unit Of Measure</label>
+          <div class="col-lg-8">
+            <div class="input-group flex-nowrap">
+              <input class="form-control form-control-lg form-control-solid" value="{{ item.unit_of_measure?.symbol }}"
+                disabled />
+              <a class="input-group-text bg-primary text-white border-primary"
+                [routerLink]="[routes.administration.unit_of_measures.show, item.unit_of_measure?.uuid]">
+                <i class="bi bi-box-arrow-up-right fw-bold"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Low Stock Number</label>
+          <div class="col-lg-8">
+            <input class="form-control form-control-lg form-control-solid" value="{{ item.low_stock_number }}" disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Item Groups</label>
+          <div class="col-lg-8">
+            <div class="bg-body w-100 px-3 py-2 rounded-2">
+              <a class="btn btn-dark btn-sm me-2 mb-2 px-2 d-inline-flex" *ngFor="let itemGroup of item.item_groups"
+                [routerLink]="[routes.administration.item_groups.show, itemGroup?.uuid]">
+                <i class="bi bi-box-arrow-up-right me-2"></i> {{ itemGroup.name }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 border-start">
+      <div class="card-title m-0">
+        <h3 class="fw-bold m-0 p-4 fs-6">More Info</h3>
+      </div>
+      <div class="card-body border-top p-4">
+        <div class="row mb-3 d-flex justify-content-between align-items-center">
+          <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created By</label>
+          <div class="col-xxl-8 d-flex justify-content-between align-items-center">
+            <span class="fw-semibold text-gray-800">{{
+              item.user?.name
+            }}</span>
+            <a class="" [routerLink]="[routes.administration.users.show, item.user?.uuid]">
+              <i class="bi bi-box-arrow-up-right fw-bold"></i>
+            </a>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created At</label>
+          <div class="col-xxl-8">
+            <span class="fw-semibold text-gray-800">{{
+              item.date_created | date: "d MMM, yyyy HH:mm:ss"
+            }}</span>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Last Updated</label>
+          <div class="col-xxl-8">
+            <span class="fw-semibold text-gray-800">{{
+              item.date_updated | date: "d MMM, yyyy HH:mm:ss"
+            }}</span>
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex align-items-center py-2 py-md-1">
+          <button appPermission [permissionArray]="[['items', 4]]" (click)="confirmDelete()"
+            class="btn btn-lg btn-danger me-2">
+            <i class="bi bi-trash me-2 mt-1"></i> Delete
+          </button>
+          <a appPermission [permissionArray]="[['items', 3]]" [routerLink]="[routes.inventory.items.edit, item.uuid]"
+            class="btn btn-lg btn-primary">
+            <i class="bi bi-pencil-square me-2 mt-1"></i> Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

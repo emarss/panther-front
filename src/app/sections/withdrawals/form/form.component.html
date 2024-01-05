@@ -1,0 +1,117 @@
+<div class="d-flex justify-content-between mb-4 w-100">
+  <div class="d-flex flex-column me-3">
+    <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ getPageTitle() }}</h1>
+    <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+      <li class="breadcrumb-item text-gray-600">
+        <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-600">
+        <a routerLink="{{ routes.financials.withdrawals.index }}"
+          class="text-gray-600 fs-8 text-hover-primary">Withdrawals</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-500">{{ getPageTitle() }}</li>
+    </ul>
+  </div>
+  <div class="d-flex align-items-center py-2 py-md-1">
+    <button (click)="backClicked()" class="btn btn-lg btn-light">
+      <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+    </button>
+  </div>
+</div>
+<div class="card w-100 mb-5">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <div class="card-title m-0">
+    <h3 class="fw-bold m-0 p-4 fs-6">{{ getPageTitle() }}</h3>
+  </div>
+
+  <form class="form" [formGroup]="form">
+    <div class="card-body border-top p-4">
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Date</label>
+        <div class="col-lg-8">
+          <input type="date" name="date" required="" formControlName="date"
+            class="form-control form-control-lg mb-3 mb-lg-0" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'date'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Select Account</label>
+        <div class="col-lg-8">
+          <app-custom-select formControlName="account" [title]="'Select Account'" [options]="accountsOptionsList"
+            (onClickCreateNew)="createNewAccount()" [createSection]="'accounts'" [createNewText]="'Add New Account'"
+            (ngModelChange)="selectedAccountChanged()" [strLimit]="20">
+          </app-custom-select>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'account'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Exchange Rate</label>
+        <div class="col-lg-8">
+          <div class="mb-3 mb-lg-0">
+            <app-exchange-rate-field [currency]="form.get('currency')?.value?.value" formControlName="exchange_rate"
+              [title]="'Enter Exchange Rate'">
+            </app-exchange-rate-field>
+          </div>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'exchange_rate'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Amount</label>
+        <div class="col-lg-8">
+          <div class="input-group flex-nowrap">
+            <input type="text" name="amount" required="" formControlName="amount"
+              class="form-control form-control-lg mb-3 mb-lg-0" placeholder="Enter receipt amount" />
+            <span class="input-group-text">
+              {{ currency }}
+            </span>
+          </div>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'amount'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div *ngIf="form.get('exchange_rate')?.value != 1 && form.get('exchange_rate')?.value != 0" class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Converted Amount</label>
+        <div class="col-lg-8">
+          <div class="input-group flex-nowrap">
+            <input
+              value="{{ getConvertedAmount() | currency : '' : '' }}"
+              readonly="true" class="form-control form-control-lg mb-3 mb-lg-0" />
+            <span class="input-group-text bg-body border-0">
+              {{ current_currency }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Narration</label>
+        <div class="col-lg-8">
+          <textarea type="text" name="narration" formControlName="narration"
+            class="form-control form-control-lg mb-3 mb-lg-0" placeholder="Enter any narration"></textarea>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'narration'">
+          </app-validation-message>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card-footer d-flex justify-content-end py-4">
+      <button type="reset" class="btn btn-lg btn-light me-2">Discard</button>
+      <button (click)="save()" class="btn btn-lg btn-primary">
+        <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+        <span *ngIf="loading">
+          <app-spinner></app-spinner> Please, wait ...
+        </span>
+      </button>
+    </div>
+
+
+  </form>
+</div>

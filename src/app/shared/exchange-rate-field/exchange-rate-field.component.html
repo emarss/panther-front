@@ -1,0 +1,32 @@
+<div ngbDropdown display="dynamic" placement="bottom-start" container="body">
+  <button type="button"
+    class="btn d-flex justify-content-between w-100 {{ isDisabled ? 'form-control-solid' : '' }}"
+    ngbDropdownToggle>
+    <span class="text-gray-600" *ngIf="!value">{{ title }}</span>
+    <span *ngIf="value" [innerHTML]="value"></span>
+    <span class="ms-2">
+      <app-ac-icon-arrow-down></app-ac-icon-arrow-down>
+    </span>
+  </button>
+  <div ngbDropdownMenu class="min-w-100">
+    <div class="p-2">
+      <div class="input-group flex-nowrap">
+        <input value="1" readonly="true" class="form-control" />
+        <span class="input-group-text readonly-child">
+          {{ defaultCurrency }}
+        </span>
+      </div>
+    </div>
+    <div class="p-2">
+      <div class="input-group flex-nowrap">
+        <input [disabled]="isDisabled" appExchangeRatePermission (input)="updateValue()" [(ngModel)]="inverse"
+          type="number" step="0.01" name="" class="form-control" placeholder="Enter amount.." />
+        <span
+          class="input-group-text {{ isDisabled ? 'disabled' : '' }}"
+          appExchangeRatePermission>
+          {{ currency ?? defaultCurrency }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

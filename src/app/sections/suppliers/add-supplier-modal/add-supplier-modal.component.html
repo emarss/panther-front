@@ -1,0 +1,123 @@
+<div class="card w-100">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <div class="card-title m-0">
+    <h3 class="fw-bold m-0 p-4 fs-6">Add New Supplier</h3>
+  </div>
+
+  <form class="form" [formGroup]="form">
+    <div class="card-body border-top p-4">
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Supplier Type</label>
+        <div class="col-lg-8">
+          <app-basic-select formControlName="type" [options]="supplierTypes"></app-basic-select>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'type'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Supplier Name</label>
+        <div class="col-lg-8">
+          <input type="text" ngbAutofocus name="name" required="" formControlName="name"
+            class="form-control form-control-lg mb-3 mb-lg-0" placeholder="Enter supplier name" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'name'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Details <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <textarea name="details" formControlName="details" class="form-control form-control-lg"
+            placeholder="Enter any supplier details/remarks" rows="2"></textarea>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'details'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Physical Address <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <textarea name="physical_address" formControlName="physical_address" class="form-control form-control-lg"
+            placeholder="Enter supplier physical address" rows="2"></textarea>
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'physical_address'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <h3 class="fw-bold m2-4 py-2 fs-7">Primary Contact</h3>
+      <hr />
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Contact Name <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <input type="text" name="contact_name" formControlName="contact_name" class="form-control form-control-lg"
+            placeholder="Enter contact name" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'contact_name'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Phone Number <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <input type="text" name="phone_number" formControlName="phone_number" class="form-control form-control-lg"
+            placeholder="Enter supplier phone number" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'phone_number'">
+          </app-validation-message>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">Email Address <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <input type="email" name="email" formControlName="email" class="form-control form-control-lg"
+            placeholder="Enter supplier email" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'email'">
+          </app-validation-message>
+        </div>
+      </div>
+
+
+      <h3 class="fw-bold mt-4 py-2 fs-7">More Company Info</h3>
+      <hr />
+
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">BP Number <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <input type="text" name="bp_number" formControlName="bp_number" class="form-control form-control-lg"
+            placeholder="Enter supplier business partner number" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'bp_number'">
+          </app-validation-message>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <label class="col-lg-4 col-form-label fw-semibold fs-8">VAT Number <app-optional-label>
+          </app-optional-label> </label>
+        <div class="col-lg-8">
+          <input type="text" name="vat_number" formControlName="vat_number" class="form-control form-control-lg"
+            placeholder="Enter supplier VAT Number" />
+          <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'vat_number'">
+          </app-validation-message>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end py-4">
+      <button ngbAutofocus (click)="activeModal.close('Close click')" class="btn btn-lg btn-light me-2">Cancel</button>
+      <button type="reset" class="btn btn-lg btn-light me-2">Discard</button>
+      <button (click)="save()" class="btn btn-lg btn-primary">
+        <span *ngIf="!loading"> <i class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+        <span *ngIf="loading">
+          <app-spinner></app-spinner> Please, wait ...
+        </span>
+      </button>
+    </div>
+
+  </form>
+</div>

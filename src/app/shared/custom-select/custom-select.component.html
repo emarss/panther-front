@@ -1,0 +1,34 @@
+<div ngbDropdown display="dynamic" placement="bottom-start">
+  <button type="button"
+    class="btn d-flex justify-content-between w-100 {{ isDisabled ? 'disabled' : '' }}"
+    ngbDropdownToggle (click)="onOpenDropdown()">
+    <span class="text-gray-600" *ngIf="selectedSelectItemIsNotset()">{{ title }}</span>
+    <span *ngIf="!selectedSelectItemIsNotset()"
+      [innerHTML]="selectedSelectItem?.name | truncate : strLimit | safe: 'html'  "></span>
+    <span>
+      <a *ngIf="!selectedSelectItemIsNotset()" class="ms-2" (click)="removeSelected($event)">
+        <i class="bi bi-x fw-bold"></i>
+      </a>
+      <span class="ms-2">
+        <app-ac-icon-arrow-down></app-ac-icon-arrow-down>
+      </span>
+    </span>
+  </button>
+  <div ngbDropdownMenu class="min-w-100">
+    <div class="p-2">
+      <input (input)="search()" [(ngModel)]="searchKey" #searchElement type="search" name="" class="form-control"
+        placeholder="Type to search..." />
+    </div>
+    <div class="results">
+      <button *ngFor="let item of filteredOptions" ngbDropdownItem (click)="onItemClick(item)"
+        [innerHTML]="item.name | safe: 'html' "
+        class="{{ selectedSelectItem?.value === item.value ? 'active ' + className: '' }}">
+      </button>
+      <span class="p-3 mb-2 d-block" *ngIf="filteredOptions.length === 0">No results found</span>
+    </div>
+    <button *ngIf="createNewText" appPermission [permissionArray]="[[createSection, 2]]" ngbDropdownItem
+      class="border-top text-primary fw-bold" (click)="createNewClicked()">
+      <i class="bi bi-plus-circle me-2"></i> {{ createNewText }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,130 @@
+<app-page-loading-overlay *ngIf="user == null"></app-page-loading-overlay>
+<div *ngIf="user">
+  <div class="d-flex justify-content-between mb-4 w-100">
+
+    <div class="d-flex flex-column me-3">
+      <h1 class="d-flex text-dark fw-bold my-1 fs-5">User {{ user.name }}</h1>
+      <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+        <li class="breadcrumb-item text-gray-600">
+          <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-500">{{ user.name + " Profile" }}</li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center py-2 py-md-1">
+      <a [routerLink]="routes.administration.users.profile_edit" class="btn btn-lg btn-primary me-2">
+        <i class="bi bi-pencil-square fw-bold me-2"></i> Edit Profile</a>
+      <a [routerLink]="routes.administration.users.profile_password" class="btn btn-lg btn-primary me-2">
+        <i class="bi bi-lock fw-bold me-2"></i> Change Password</a>
+      <button (click)="backClicked()" class="btn btn-lg btn-light">
+        <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+      </button>
+    </div>
+  </div>
+  <div class="card w-100 mb-5">
+    <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card-title m-0">
+          <h3 class="fw-bold m-0 p-4 fs-6">User Details</h3>
+        </div>
+        <div class="card-body border-top p-4">
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Full Name</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ user.name }}" disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Email Address</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ user.email }}" disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Whatsapp Number</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ user.whatsapp_number }}"
+                disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">User Role</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ user.role }}" disabled />
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label text-gray-600 fw-semibold fs-8">Status</label>
+            <div class="col-lg-8">
+              <input class="form-control form-control-lg form-control-solid" value="{{ user.status }}" disabled />
+            </div>
+          </div>
+          <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">User Preferences</h3>
+        <hr />
+
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Receive Whatsapp Notifications </label>
+          <div class="col-lg-8">
+            <input type="text"
+              value="{{ user.preference?.receive_whatsapp_notifications ? 'Yes' : 'No' }}"
+              class="form-control form-control-lg form-control-solid" disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Morning Notifications Time</label>
+          <div class="col-lg-8">
+            <input type="text"
+              value="{{ user.preference?.morning_notifications_time ?? '--' }}"
+              class="form-control form-control-lg form-control-solid" disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Evening Notifications Time</label>
+          <div class="col-lg-8">
+            <input type="text"
+              value="{{ user.preference?.evening_notifications_time ?? '--' }}"
+              class="form-control form-control-lg form-control-solid" disabled />
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-md-4 border-start">
+        <div class="card-title m-0">
+          <h3 class="fw-bold m-0 p-4 fs-6">More Info</h3>
+        </div>
+        <div class="card-body border-top p-4">
+          <div class="row mb-4 d-flex justify-content-between align-items-center">
+            <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created By</label>
+            <div class="col-xxl-8 d-flex justify-content-between align-items-center">
+              <span class="fw-semibold text-gray-800">{{
+                user.user?.name
+              }}</span>
+              <a *ngIf="user.user?.uuid !== user.uuid"
+                [routerLink]="[routes.administration.users.show, user.user?.uuid]">
+                <i class="bi bi-box-arrow-up-right fw-bold"></i>
+              </a>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created At</label>
+            <div class="col-lg-8">
+              <span class="fw-semibold text-gray-800">{{
+                user.date_created | date: "d MMM, yyyy HH:mm:ss"
+              }}</span>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Last Updated</label>
+            <div class="col-lg-8">
+              <span class="fw-semibold text-gray-800">{{
+                user.date_updated | date: "d MMM, yyyy HH:mm:ss"
+              }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

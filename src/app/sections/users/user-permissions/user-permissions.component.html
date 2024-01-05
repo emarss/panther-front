@@ -1,0 +1,258 @@
+<app-page-loading-overlay *ngIf="form == null"></app-page-loading-overlay>
+<div *ngIf="form != null">
+  <div class="d-flex justify-content-between mb-4 w-100">
+    <div class="d-flex flex-column me-3">
+      <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ userToEdit.name }} Permissions</h1>
+      <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+        <li class="breadcrumb-item text-gray-600">
+          <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-600">
+          <a routerLink="{{ routes.administration.users.index }}" class="text-gray-600 fs-8 text-hover-primary">Users</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-500">{{ userToEdit.name }} Permissions</li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center py-2 py-md-1">
+      <button (click)="backClicked()" class="btn btn-lg btn-light"><i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i>
+        Go Back</button>
+    </div>
+  </div>
+  <div class="card w-100 mb-5">
+    <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+    <div class="card-title m-0">
+      <h3 class="fw-bold m-0 p-4 fs-6">User Permissions</h3>
+    </div>
+    <form class="form" [formGroup]="form">
+      <div class="card-body border-top p-4">
+        <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Inventory Section Permissions</h3>
+        <hr />
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Items Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="items" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'items'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Purchase Orders Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="purchase_orders" [title]="'Select Option'"
+              [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'purchase_orders'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Stock Issues Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="stock_issues" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'stock_issues'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Stock Adjustments Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="stock_adjustments" [title]="'Select Option'"
+              [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'stock_adjustments'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Stock Returns Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="stock_returns" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'stock_returns'">
+            </app-validation-message>
+          </div>
+        </div>
+
+
+        <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Financials Section Permissions</h3>
+        <hr />
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Payments Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="payments" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'payments'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Receipts Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="receipts" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'receipts'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Deposits Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="deposits" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'deposits'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Withdrawals Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="withdrawals" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'withdrawals'">
+            </app-validation-message>
+          </div>
+        </div>
+
+        <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">People Section Permissions</h3>
+        <hr />
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Suppliers Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="suppliers" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'suppliers'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Contact Persons Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="contact_persons" [title]="'Select Option'"
+              [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'contact_persons'">
+            </app-validation-message>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+        <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Administration Section Permissions</h3>
+        <hr />
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Accounts Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="accounts" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'accounts'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Bank Accounts Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="bank_accounts" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'bank_accounts'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Exchange Rates Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="exchange_rates" [title]="'Select Option'"
+              [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'exchange_rates'">
+            </app-validation-message>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Item Groups Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="item_groups" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'item_groups'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Settings Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="settings" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'settings'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Subscriptions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="subscriptions" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'subscriptions'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Taxes</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="taxes" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'taxes'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Unit Of Measures</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="unit_of_measures" [title]="'Select Option'"
+              [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'unit_of_measures'">
+            </app-validation-message>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Users Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="users" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'users'">
+            </app-validation-message>
+          </div>
+        </div>
+
+
+        <h3 class="fw-bold m-0 pt-4 pb-2 fs-7">Reports Section Permissions</h3>
+        <hr />
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">User Logs Permissions</label>
+          <div class="col-lg-8">
+            <app-custom-select formControlName="user_logs" [title]="'Select Option'" [options]="permissionsOptions">
+            </app-custom-select>
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'user_logs'">
+            </app-validation-message>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end py-4">
+        <button type="reset" class="btn btn-lg btn-light me-2">Discard</button>
+        <button (click)="save()" class="btn btn-lg btn-primary"><span *ngIf="!loading"> <i
+              class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span></button>
+      </div>
+      <input type="hidden">
+    </form>
+  </div>
+</div>

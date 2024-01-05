@@ -1,0 +1,5 @@
+<app-page-loading-overlay *ngIf="account == null" [showMenu]="true"></app-page-loading-overlay>
+<div *ngIf="account != null">
+  <app-account-show-menu [account]="account"></app-account-show-menu>
+  <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+</div>

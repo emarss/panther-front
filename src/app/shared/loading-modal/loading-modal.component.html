@@ -1,0 +1,8 @@
+<div class="modal-body">
+  <div class="d-flex justify-content-center align-items-center py-3">
+    <div class="me-2">
+      <app-loading-gif-image></app-loading-gif-image>
+    </div>
+    <div class="fw-bold fs-5 text-gray-700" [innerHTML]="content | safe: 'html'"></div>
+  </div>
+</div>

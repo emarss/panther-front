@@ -1,0 +1,5 @@
+<app-page-loading-overlay *ngIf="tax == null" [showMenu]="true"></app-page-loading-overlay>
+<div *ngIf="tax != null">
+  <app-tax-show-menu [tax]="tax"></app-tax-show-menu>
+  <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+</div>

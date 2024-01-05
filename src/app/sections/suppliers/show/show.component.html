@@ -1,0 +1,5 @@
+<app-page-loading-overlay *ngIf="supplier == null" [showMenu]="true"></app-page-loading-overlay>
+<div *ngIf="supplier != null">
+  <app-supplier-show-menu [supplier]="supplier"></app-supplier-show-menu>
+  <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+</div>

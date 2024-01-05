@@ -1,0 +1,12 @@
+<div class="modal-header" ngbAutofocus>
+  <h4 class="modal-title">{{ title }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <p>{{ message }}</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn {{ actionBtnClass }} btn-lg"
+    (click)="action();activeModal.close('Close click')">{{ actionText }}</button>
+  <button type="button" class="btn btn-light btn-lg" (click)="activeModal.close('Close click')">Close</button>
+</div>

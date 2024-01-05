@@ -1,0 +1,34 @@
+@import './variables.scss';
+
+.main-page {
+  height: 100vh;
+  width: 100%;
+
+  .logo {
+    width: 300px;
+  }
+
+
+  .form-container {
+    width: 450px;
+
+    .btn-outline {
+      border-color: $body-background-color-2;
+
+      .icon {
+        width: 22px;
+      }
+    }
+  }
+
+  .logo-container {
+    background-color: $primary-color-1;
+    height: 100vh;
+
+
+
+    .screenshots {
+      width: calc(100% - 40px);
+    }
+  }
+}

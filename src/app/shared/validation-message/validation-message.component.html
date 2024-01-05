@@ -1,0 +1,15 @@
+<div *ngIf="form !== undefined && form !== null">
+  <div class="text-danger fw-semibold" *ngIf="
+      showErrors && (form.controls[field].errors)
+    ">
+    <span class="my-2" *ngIf="form.controls[field].errors?.['required']">This field is required</span>
+    <span class="my-2" *ngIf="form.controls[field].errors?.['minlength']">Minimum length is
+      {{ form.controls[field].errors?.['minlength']['requiredLength'] }}</span>
+    <span class="my-2" *ngIf="form.controls[field].errors?.['maxlength']">Maximum length is
+      {{ form.controls[field].errors?.['maxlength']['requiredLength'] }}</span>
+    <span class="my-2" *ngIf="form.controls[field].errors?.['email']">The field requires a valid email</span>
+    <span class="my-2" *ngIf="form.controls[field].errors?.['invalidPhoneNumber']">Please, enter a valid phone number
+      eg. +263774671339</span>
+    <span class="my-2" *ngIf="form.controls[field].errors?.['itemOutOfRange']">Selected option is out of range</span>
+  </div>
+</div>

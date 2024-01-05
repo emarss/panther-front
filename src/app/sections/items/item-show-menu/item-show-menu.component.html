@@ -1,0 +1,79 @@
+<div class="d-flex justify-content-between mb-4 w-100">
+  <div class="d-flex flex-column me-3">
+    <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ item.description | truncate }}</h1>
+    <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+      <li class="breadcrumb-item text-gray-600">
+        <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-600">
+        <a routerLink="{{ routes.inventory.items.index }}" class="text-gray-600 fs-8 text-hover-primary">Items</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-500">Show Item</li>
+    </ul>
+  </div>
+  <div class="d-flex align-items-center py-2 py-md-1">
+    <a [routerLink]="[routes.inventory.purchase_orders.create_for_item, item.uuid]" appPermission
+      [permissionArray]="[['purchase_orders', 3]]" class="btn btn-lg btn-primary me-2">
+      <i class="bi bi-plus-lg fw-bold me-2"></i> New Purchase Order</a>
+    <a [routerLink]="[routes.inventory.stock_issues.create_for_item, item.uuid]" appPermission
+      [permissionArray]="[['stock_issues', 3]]" class="btn btn-lg btn-primary me-2">
+      <i class="bi bi-plus-lg fw-bold me-2"></i> New Issue</a>
+
+    <div ngbDropdown container="body" display="dynamic" placement="bottom-end">
+      <button type="button" class="btn btn-primary me-2 btn-lg fw-bold" ngbDropdownToggle>
+        <i class="bi bi-three-dots mt-1 me-2"></i> More
+        <span class="ms-2">
+          <img src="../../../assets/icons/caret-white.svg" alt="" />
+        </span>
+      </button>
+      <div ngbDropdownMenu>
+        <a [routerLink]="[routes.inventory.stock_adjustments.create_for_item, item.uuid]" appPermission
+          [permissionArray]="[['stock_adjustments', 3]]" ngbDropdownItem>New Stock Adjustments</a>
+        <a [routerLink]="[routes.inventory.stock_returns.create_for_item, item.uuid]" appPermission
+          [permissionArray]="[['stock_returns', 3]]" ngbDropdownItem>New Stock Return</a>
+      </div>
+    </div>
+    <button (click)="backClicked()" class="btn btn-lg btn-light">
+      <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+    </button>
+  </div>
+</div>
+<div class="card av-nav w-100 mb-3">
+  <div class="card-body py-0">
+    <ul class="nav py-0">
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsShow() ? 'active' : '' }}"
+          [routerLink]="[routes.inventory.items.show, item.uuid]">Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsStockIssues() ? 'active' : '' }}"
+          [routerLink]="[routes.inventory.items.stock_issues, item.uuid]">Stock Issues</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsStockReturns() ? 'active' : '' }}"
+          [routerLink]="[routes.inventory.items.stock_returns, item.uuid]">Stock Returns</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsStatement() ? 'active' : '' }}"
+          [routerLink]="[routes.inventory.items.statement, item.uuid]">Statement</a>
+      </li>
+      <li class="nav-item">
+        <div ngbDropdown container="body" display="dynamic" placement="bottom-end">
+          <button type="button"
+            class="btn nav-link {{  pageIsPurchaseOrderItems() ? 'active' : '' }} me-2 btn-lg fw-bold"
+            ngbDropdownToggle>
+            <i class="bi bi-three-dots mt-1 me-2"></i> More
+            <span class="ms-2">
+              <img src="../../../assets/icons/caret.svg" alt="" />
+            </span>
+          </button>
+          <div ngbDropdownMenu>
+            <a class="{{ pageIsPurchaseOrderItems() ? 'active' : '' }}"
+              [routerLink]="[routes.inventory.items.purchase_order_items, item.uuid]" ngbDropdownItem>Purchase Order
+              Items</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

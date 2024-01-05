@@ -1,0 +1,484 @@
+<aside>
+  <div class="m-3 inner-scrollbar">
+    <ngb-accordion [closeOthers]="true" #acc="ngbAccordion" activeIds="{{ [openSection] }}">
+      <ngb-panel [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <a routerLink="/"
+            class="{{ currentRouteIsDashboard() ? 'active' : '' }} btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-speedometer2 fw-bold"></i>
+              </span>
+              Dashboard
+            </div>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel [cardClass]="'border-0 mt-4 mb-2'">
+        <ng-template ngbPanelHeader>
+          <div class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">SECTIONS</div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['students', 1],['classrooms', 1]])" id="admissionsMenu"
+        [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-window-stack fw-bold"></i>
+              </span>
+              Admissions
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['applications', 1], ['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/students')" routerLink="{{ routes.admissions.applications.index }}"
+            class="child-menu btn">&blacksquare;
+            <span class="ms-2">Applications</span>
+            <button appPermission [permissionArray]="[['applications', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.students.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Transfers</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['students', 1],['classrooms', 1]])" id="studentsMenu"
+        [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-person-lines-fill fw-bold"></i>
+              </span>
+              Students & More
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['students', 1]]" [ngClass]="getChildActiveClass('classrooms/students')"
+            routerLink="{{ routes.classrooms.students.index }}" class="child-menu btn">&blacksquare;
+            <span class="ms-2">Students</span>
+            <button appPermission [permissionArray]="[['students', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.students.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['classrooms', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Classrooms</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['guardians', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/guardians')" routerLink="{{ routes.classrooms.guardians.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Guardians</span>
+            <button appPermission [permissionArray]="[['guardians', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.guardians.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['issues', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/issues')" routerLink="{{ routes.classrooms.issues.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Issues</span>
+            <button appPermission [permissionArray]="[['issues', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.issues.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['teachers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/teachers')" routerLink="{{ routes.classrooms.teachers.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Teachers</span>
+            <button appPermission [permissionArray]="[['teachers', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.teachers.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['suppliers', 1],['contact_persons', 1]])" id="communicationMenu"
+        [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-envelope fw-bold"></i>
+              </span>
+              Communication
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['suppliers', 1]]" [ngClass]="getChildActiveClass('people/suppliers')"
+            routerLink="{{ routes.people.suppliers.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Email</span>
+            <button appPermission [permissionArray]="[['suppliers', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.people.suppliers.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['students', 1],['classrooms', 1]])" id="academicsMenu"
+        [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-window-stack fw-bold"></i>
+              </span>
+              Academics
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Subjects</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Course Work</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Assignments</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['applications', 1], ['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/students')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare;
+            <span class="ms-2">Attendance</span>
+            <button appPermission [permissionArray]="[['applications', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.students.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Exams</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['students', 1],['classrooms', 1]])" id="feesAndBillingMenu"
+        [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-coin fw-bold"></i>
+              </span>
+              Fees & Billing
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['applications', 1], ['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/students')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare;
+            <span class="ms-2">Fees Payments</span>
+            <button appPermission [permissionArray]="[['applications', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.students.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['applications', 1], ['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/students')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare;
+            <span class="ms-2">Fees Invoices</span>
+            <button appPermission [permissionArray]="[['applications', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.students.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Fees Structures</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['transfers', 1]]"
+            [ngClass]="getChildActiveClass('classrooms/classrooms')" routerLink="{{ routes.classrooms.classrooms.index }}"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Fees Stucture Items</span>
+            <button appPermission [permissionArray]="[['classrooms', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.classrooms.classrooms.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel
+        *ngIf="!allPermissionsAreFalse([['items', 1],['purchase_orders', 1],['stock_issues', 1],['stock_returns', 1],['stock_adjustments', 1]])"
+        id="inventoryMenu" [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-box-fill"></i>
+              </span>
+              Inventory Management
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['items', 1]]" [ngClass]="getChildActiveClass('inventory/items')"
+            routerLink="{{ routes.inventory.items.index }}" class="child-menu btn">&blacksquare; <span class="ms-2">Items
+              List</span>
+            <button appPermission [permissionArray]="[['items', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.inventory.items.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['purchase_orders', 1]]"
+            [ngClass]="getChildActiveClass('inventory/purchase-orders')"
+            routerLink="{{ routes.inventory.purchase_orders.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Purchase Orders</span>
+            <button appPermission [permissionArray]="[['purchase_orders', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.inventory.purchase_orders.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['stock_issues', 1]]"
+            [ngClass]="getChildActiveClass('inventory/stock-issues')"
+            routerLink="{{ routes.inventory.stock_issues.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Stock Issues</span>
+            <button appPermission [permissionArray]="[['stock_issues', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.inventory.stock_issues.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['stock_returns', 1]]"
+            [ngClass]="getChildActiveClass('inventory/stock-returns')"
+            routerLink="{{ routes.inventory.stock_returns.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Stock Returns</span>
+            <button appPermission [permissionArray]="[['stock_returns', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.inventory.stock_returns.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['stock_adjustments', 1]]"
+            [ngClass]="getChildActiveClass('inventory/stock-adjustments')"
+            routerLink="{{ routes.inventory.stock_adjustments.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Adjustments</span>
+            <button appPermission [permissionArray]="[['stock_adjustments', 2]]"
+              class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.inventory.stock_adjustments.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['payments', 1],['receipts', 1],['withdrawals', 1],['deposits', 1]])"
+        id="financeMenu" [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-currency-dollar fw-bold"></i>
+              </span>
+              Financials
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['payments', 1]]" [ngClass]="getChildActiveClass('financials/payments')"
+            routerLink="{{ routes.financials.payments.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Payments</span>
+            <button appPermission [permissionArray]="[['payments', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.financials.payments.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['receipts', 1]]" [ngClass]="getChildActiveClass('financials/receipts')"
+            routerLink="{{ routes.financials.receipts.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Receipts</span>
+            <button appPermission [permissionArray]="[['receipts', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.financials.receipts.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['deposits', 1]]" [ngClass]="getChildActiveClass('financials/deposits')"
+            routerLink="{{ routes.financials.deposits.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Deposits</span>
+            <button appPermission [permissionArray]="[['deposits', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.financials.deposits.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['withdrawals', 1]]"
+            [ngClass]="getChildActiveClass('financials/withdrawals')"
+            routerLink="{{ routes.financials.withdrawals.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Withdrawals</span>
+            <button appPermission [permissionArray]="[['withdrawals', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.financials.withdrawals.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel *ngIf="!allPermissionsAreFalse([['users', 1],['item_groups', 1],['accounts', 1],['file_manager', 1]])"
+        id="administrationMenu" [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <button ngbPanelToggle type="button" class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">
+              <span class="me-2">
+                <i class="bi bi-person-bounding-box"></i>
+              </span>
+              Administration
+            </div>
+            <span class="caret">
+              <img src="../../../assets/icons/caret.svg" alt="" srcset="" />
+            </span>
+          </button>
+        </ng-template>
+        <ng-template ngbPanelContent>
+          <a appPermission [permissionArray]="[['accounts', 1]]"
+            [ngClass]="getChildActiveClass('administration/accounts')"
+            routerLink="{{ routes.administration.accounts.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Accounts</span>
+            <button appPermission [permissionArray]="[['accounts', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.administration.accounts.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['bank_accounts', 1]]"
+            [ngClass]="getChildActiveClass('administration/bank-accounts')"
+            routerLink="/administration/bank-accounts/index" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Bank Accounts</span>
+            <button appPermission [permissionArray]="[['bank_accounts', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.administration.bank_accounts.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['item_groups', 1]]"
+            [ngClass]="getChildActiveClass('administration/item-groups')" routerLink="/administration/item-groups/index"
+            class="child-menu btn">&blacksquare; <span class="ms-2">Item Groups</span>
+            <button appPermission [permissionArray]="[['item_groups', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.administration.item_groups.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['taxes', 1]]" [ngClass]="getChildActiveClass('administration/taxes')"
+            routerLink="/administration/taxes/index" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Taxes</span>
+            <button appPermission [permissionArray]="[['taxes', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.administration.taxes.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['unit_of_measures', 1]]"
+            [ngClass]="getChildActiveClass('administration/unit-of-measures')"
+            routerLink="/administration/unit-of-measures/index" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Unit of Measures</span>
+            <button appPermission [permissionArray]="[['unit_of_measures', 2]]"
+              class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.administration.unit_of_measures.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+          <a appPermission [permissionArray]="[['users', 1]]" [ngClass]="getChildActiveClass('administration/users')"
+            routerLink="{{ routes.administration.users.index }}" class="child-menu btn">&blacksquare; <span
+              class="ms-2">Users</span>
+            <button appPermission [permissionArray]="[['users', 2]]" class="btn btn-light px-1 py-0 float-end"
+              (click)="openCreateRoute($event, routes.administration.users.create)">
+              <i class="bi bi-plus fw-bold"></i>
+            </button>
+          </a>
+        </ng-template>
+      </ngb-panel>
+
+      <ngb-panel [cardClass]="'border-0 mt-4 mb-2'">
+        <ng-template ngbPanelHeader>
+          <div class="btn w-100 menu-accordion-btn d-flex justify-content-between">
+            <div class="fs-8 fw-semibold label">MORE</div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel appPermission [permissionArray]="[['settings', 1]]" [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <a [ngClass]="getChildActiveClass('settings/show')" routerLink="/settings/show"
+            class="fs-8 fw-semibold child-menu btn label">
+            <span class="me-2">
+              <i class="bi bi-gear fw-bold"></i>
+            </span>
+            Settings
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <a [ngClass]="getChildActiveClass('users/profile')" routerLink="/users/profile"
+            class="fs-8 fw-semibold child-menu btn label">
+            <span class="me-2">
+              <i class="bi bi-person fw-bold"></i>
+            </span>
+            Profile
+          </a>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel [cardClass]="'border-0'">
+        <ng-template ngbPanelHeader>
+          <a [ngClass]="getChildActiveClass('help')" routerLink="/help/help/index"
+            class="fs-8 fw-semibold child-menu btn label">
+            <span class="me-2">
+              <i class="bi bi-info-square-fill"></i>
+            </span>
+            Help
+          </a>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</aside>

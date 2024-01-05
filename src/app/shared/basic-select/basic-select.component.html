@@ -1,0 +1,22 @@
+<div ngbDropdown display="dynamic" placement="bottom-end">
+  <button type="button"
+    class="btn d-flex justify-content-between w-100 {{ isDisabled ? 'disabled' : '' }}"
+    ngbDropdownToggle (click)="onOpenDropdown()">
+    <span class="text-gray-600" *ngIf="selectedOptionIsNotset()">{{ title }}</span>
+    <span *ngIf="!selectedOptionIsNotset()">{{ selectedOption }}</span>
+    <span>
+      <a *ngIf="!selectedOptionIsNotset()" class="ms-2" (click)="removeSelected($event)">
+        <i class="bi bi-x fw-bold"></i>
+      </a>
+      <span class="ms-2">
+        <app-ac-icon-arrow-down></app-ac-icon-arrow-down>
+      </span>
+    </span>
+  </button>
+  <div ngbDropdownMenu class="w-100">
+    <div class="results">
+      <button *ngFor="let item of options" ngbDropdownItem (click)="onItemClick(item)"
+        class="{{ selectedOption === item ? 'active ' + className: '' }}">{{ item }}</button>
+    </div>
+  </div>
+</div>

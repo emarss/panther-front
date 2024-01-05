@@ -1,0 +1,40 @@
+<div class="login">
+  <div class="h-100 d-flex align-items-center justify-content-center p-3">
+    <div class="d-block text-center form-container">
+      <img src="../../../assets/images/logo-long.png" class="logo">
+          <hr>
+      <h3 class="card-title fs-4 my-4 fw-bold">Sign In</h3>
+      <form [formGroup]="form" (submit)="login()">
+        <div class="form-group">
+          <input type="email" name="email" formControlName="email"
+            class="form-control form-control-lg mb-3"
+            placeholder="Email Address">
+        </div>
+        <div class="mb-3">
+          <div class="input-group flex-nowrap">
+            <input type="password" #psswdFld name="password"
+              autocomplete="current-password"
+              formControlName="password" class="form-control form-control-lg"
+              placeholder="Password">
+            <a class="input-group-text"
+              (click)="psswdFld.getAttribute('type') === 'password' ? psswdFld.setAttribute('type', 'text') : psswdFld.setAttribute('type', 'password')">
+              <i class="bi bi-eye"></i>
+            </a>
+          </div>
+        </div>
+        <div class="form-group mb-3 text-end">
+          <a [routerLink]="routes.authentication.forgot_password"
+            class="fw-semibold">Forgot Password?</a>
+        </div>
+        <button type="submit mb-5"
+          class="btn btn-primary btn-lg w-100 justify-content-center">
+          <span *ngIf="!loading"> <i
+              class="bi bi-box-arrow-in-right fw-semibold me-2"></i> Sign In</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

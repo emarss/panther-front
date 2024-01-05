@@ -1,0 +1,5 @@
+<app-page-loading-overlay *ngIf="purchaseOrder == null" [showMenu]="true"></app-page-loading-overlay>
+<div *ngIf="purchaseOrder != null">
+  <app-purchase-order-show-menu [purchaseOrder]="purchaseOrder"></app-purchase-order-show-menu>
+  <router-outlet (activate)="onOutletLoaded($event)"></router-outlet>
+</div>

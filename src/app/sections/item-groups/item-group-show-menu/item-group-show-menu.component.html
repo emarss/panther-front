@@ -1,0 +1,14 @@
+<div class="card av-nav w-100 mb-3">
+  <div class="card-body py-0">
+    <ul class="nav py-0">
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsShow() ? 'active' : '' }}"
+          [routerLink]="[routes.administration.item_groups.show, itemGroup.uuid]">Item Group Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {{ pageIsItems() ? 'active' : '' }}"
+          [routerLink]="[routes.administration.item_groups.items, itemGroup.uuid]">Item Group Items</a>
+      </li>
+    </ul>
+  </div>
+</div>

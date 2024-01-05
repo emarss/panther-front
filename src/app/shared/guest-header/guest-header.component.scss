@@ -1,0 +1,13 @@
+@import '../../../assets/scss/variables.scss';
+
+nav {
+  background-color: $primary-color-1;
+  height: 70px;
+  z-index: 100;
+}
+
+.loading-overlay {
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}

@@ -1,0 +1,28 @@
+
+<div class="d-flex justify-content-between mb-4 w-100">
+  <div class="d-flex flex-column me-3">
+    <h1 class="d-flex text-dark fw-bold my-1 fs-5">Dashboard</h1>
+    <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-700 fs-7 my-1 align-items-center">
+      <li class="breadcrumb-item text-gray-700">
+        <a href="#" class="text-gray-700 fs-8 text-hover-primary">{{ currentCompany.company_name }}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="d-flex align-items-center py-2 py-md-1">
+    <div ngbDropdown display="dynamic" placement="bottom-end">
+      <button type="button" class="btn btn-lg btn-primary text-white fw-bold ms-3" ngbDropdownToggle>
+        <i class="bi bi-three-dots fw-bold me-2"></i>More Options
+        <span class="ms-2">
+          <img src="../../../assets/icons/caret-white.svg" alt="">
+        </span>
+      </button>
+      <div ngbDropdownMenu>
+        <a routerLink="{{ routes.financials.receipts.create }}" appPermission [permissionArray]="[['receipts', 2]]"
+          ngbDropdownItem>New Receipt</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <app-welcome></app-welcome>
+</div>

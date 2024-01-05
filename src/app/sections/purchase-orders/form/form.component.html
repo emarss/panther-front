@@ -1,0 +1,367 @@
+<div class="d-flex justify-content-between mb-4 w-100">
+  <div class="d-flex flex-column me-3">
+    <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ getPageTitle() }}</h1>
+    <ul
+      class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+      <li class="breadcrumb-item text-gray-600">
+        <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-600">
+        <a routerLink="{{ routes.inventory.purchase_orders.index }}"
+          class="text-gray-600 fs-8 text-hover-primary">Purchase Orders</a>
+      </li>
+      <li class="breadcrumb-item fs-8 text-gray-500">{{ getPageTitle() }}</li>
+    </ul>
+  </div>
+  <div class="d-flex align-items-center py-2 py-md-1">
+    <button (click)="backClicked()" class="btn btn-lg btn-light">
+      <i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i> Go Back
+    </button>
+  </div>
+</div>
+<div class="card w-100 mb-5">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <form class="form" [formGroup]="form">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card-title d-flex align-items-center m-0">
+            <h3 class="fw-bold m-0 p-4 fs-6">{{ getPageTitle() }}</h3>
+          </div>
+          <div class="card-body border-top p-4">
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-lg-4 col-form-label fw-semibold fs-8">Date</label>
+                  <div class="col-lg-8">
+                    <div class="input-group flex-nowrap">
+                      <span class="input-group-text" id="basic-addon1"><i
+                          class="bi bi-calendar-date"></i> </span>
+                      <input type="date" name="date" required
+                        formControlName="date"
+                        class="form-control form-control-lg mb-3 mb-lg-0" />
+                    </div>
+                    <app-validation-message [form]="form"
+                      [showErrors]="showValidationErrors" [field]="'date'">
+                    </app-validation-message>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-lg-4 col-form-label fw-semibold fs-8">Due
+                    Date</label>
+                  <div class="col-lg-8">
+                    <div class="input-group flex-nowrap">
+                      <span class="input-group-text" id="basic-addon1"><i
+                          class="bi bi-calendar-date"></i> </span>
+                      <input type="date" name="due_date" required
+                        formControlName="due_date"
+                        class="form-control form-control-lg mb-3 mb-lg-0" />
+                    </div>
+                    <app-validation-message [form]="form"
+                      [showErrors]="showValidationErrors" [field]="'due_date'">
+                    </app-validation-message>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-lg-4 col-form-label fw-semibold fs-8">Select
+                    Supplier</label>
+                  <div class="col-lg-8">
+                    <app-custom-select formControlName="supplier"
+                      [title]="'Select Supplier'" [options]="suppliersList"
+                      (onClickCreateNew)="createNewSupplier()"
+                      [createSection]="'suppliers'"
+                      [createNewText]="'Add New Supplier'" [strLimit]="20">
+                    </app-custom-select>
+                    <app-validation-message [form]="form"
+                      [showErrors]="showValidationErrors" [field]="'supplier'">
+                    </app-validation-message>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-lg-4 col-form-label fw-semibold fs-8">Ref
+                    <app-optional-label></app-optional-label>
+                  </label>
+                  <div class="col-lg-8">
+                    <div class="input-group flex-nowrap">
+                      <span class="input-group-text" id="basic-addon1"><i
+                          class="bi bi-calendar-date"></i> </span>
+                      <input type="text" name="reference"
+                        placeholder="Enter purchase order reference"
+                        formControlName="reference"
+                        class="form-control form-control-lg mb-3 mb-lg-0" />
+                    </div>
+                    <app-validation-message [form]="form"
+                      [showErrors]="showValidationErrors" [field]="'reference'">
+                    </app-validation-message>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-lg-4 col-form-label fw-semibold fs-8">Select
+                    Account</label>
+                  <div class="col-lg-8">
+                    <app-custom-select formControlName="account"
+                      [title]="'Select Account'"
+                      [options]="accountsOptionsList"
+                      [createSection]="'accounts'"
+                      (onClickCreateNew)="createNewAccount()"
+                      [createNewText]="'Add New Account'"
+                      (ngModelChange)="selectedAccountChanged()" [strLimit]="20">
+                    </app-custom-select>
+                    <app-validation-message [form]="form"
+                      [showErrors]="showValidationErrors" [field]="'account'">
+                    </app-validation-message>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <label class="col-lg-4 col-form-label fw-semibold fs-8">Exchange
+                    Rate</label>
+                  <div class="col-lg-8">
+                    <app-exchange-rate-field [currency]="this.currency"
+                      formControlName="exchange_rate"
+                      [title]="'Enter Exchange Rate'"
+                      (ngModelChange)="exchangeRateChanged()">
+                    </app-exchange-rate-field>
+                    <app-validation-message [form]="form"
+                      [showErrors]="showValidationErrors"
+                      [field]="'exchange_rate'">
+                    </app-validation-message>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="card-body py-4">
+            <table
+              class="table align-middle table-header-border-solid fs-8 no-footer">
+              <thead>
+                <tr class="text-start text-gray-700 fs-8 text-uppercase">
+                  <th style="width: 40px;" class="pb-3 fw-bold">#</th>
+                  <th class="pb-3 fw-bold">Item Description</th>
+                  <th style="width: 120px;" class="pb-3 fw-bold text-end">Quantity</th>
+                  <th style="width: 150px;" class="pb-3 fw-bold text-end">Price</th>
+                  <th style="width: 150px;" class="pb-3 fw-bold text-end">Tax</th>
+                  <th style="width: 150px;" class="pb-3 fw-bold text-end">Total</th>
+                  <th style="width: 50px;" class="pb-3 fw-bold text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody class="fw-semibold">
+                <tr
+                  *ngFor="let item of selectedPurchaseOrderItems; let i = index; trackBy: indexTracker">
+                  <td>{{ i+1 }}</td>
+                  <td>
+                    <app-custom-select name="item_{{ i }}"
+                      [ngModelOptions]="{standalone: true}"
+                      (onClickCreateNew)="createNewItem()"
+                      [createSection]="'items'"
+                      [createNewText]="'Create New Item'"
+                      [(ngModel)]="selectedPurchaseOrderItems[i]['item']"
+                      [title]="'Select Item'"
+                      [options]="itemsOptionsList" [strLimit]="25"
+                      (ngModelChange)="purchaseOrderItemChanged(i)">
+                    </app-custom-select>
+                  </td>
+                  <td class="text-end">
+                    <input type="number" [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="item['quantity']"
+                      class="form-control form-control-lg mb-3 mb-lg-0"
+                      value="0" placeholder="Qty" />
+                  </td>
+                  <td class="text-end">
+                    <input type="number" step="0.01"
+                      [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="item['unitPrice']"
+                      class="form-control text-end form-control-lg mb-3 mb-lg-0"
+                      value="0.00" placeholder="Price/Unit" />
+                  </td>
+                  <td class="text-end">
+                    <app-custom-tax-select name="tax_{{ i }}"
+                      [ngModelOptions]="{standalone: true}"
+                      [(ngModel)]="selectedPurchaseOrderItems[i]['tax']"
+                      [title]="'Select Tax'" [options]="taxesList"
+                      [strLimit]="25" [strLimit]="25"
+                      (onClickCreateNew)="createNewTax()"
+                      [createNewText]="'Add New Tax'">
+                    </app-custom-tax-select>
+                  </td>
+                  <td class="text-end">
+                    {{ selectedPurchaseOrderItems[i]['unitPrice'] *
+                    selectedPurchaseOrderItems[i]['quantity'] | currency:
+                    currency : '' }}
+                    {{ currency }}</td>
+                  <td class="d-flex justify-content-end">
+                    <a (click)="removePurchaseOrderItem(i)"
+                      class="btn btn-light btn-lg fw-bold"><i
+                        class="bi bi-trash fw-semibold"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" class="border-top text-end">
+                    <button (click)="addNewPurchaseOrderItem()"
+                      class="btn btn-light d-inline-block btn-lg"><i
+                        class="bi bi-plus fw-bold me-2"></i> Add New Line</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body">
+            <div class="row mb-4">
+              <label class="col-lg-4 col-form-label fw-semibold fs-8">Purchase
+                Order Status</label>
+              <div class="col-lg-8">
+                <app-basic-select formControlName="purchase_order_status"
+                  [title]="'Select Option'"
+                  [options]="purchaseOrderStatuses">
+                </app-basic-select>
+                <app-validation-message [form]="form"
+                  [showErrors]="showValidationErrors"
+                  [field]="'purchase_order_status'">
+                </app-validation-message>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <label class="col-lg-4 col-form-label fw-semibold fs-8">Total
+                Discount</label>
+              <div class="col-lg-8">
+                <div class="input-group flex-nowrap">
+                  <span class="input-group-text" id="basic-addon1"><i
+                      class="bi bi-currency-dollar"></i> </span>
+                  <input type="text" name="discount" required
+                    formControlName="discount"
+                    class="form-control form-control-lg mb-3 mb-lg-0"
+                    placeholder="Enter total purchase discount" />
+                </div>
+                <app-validation-message [form]="form"
+                  [showErrors]="showValidationErrors" [field]="'discount'">
+                </app-validation-message>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <label class="col-lg-4 col-form-label fw-semibold fs-8">Supplier
+                Notes / Terms <app-optional-label>
+                </app-optional-label>
+              </label>
+              <div class="col-lg-8">
+                <div class="input-group flex-nowrap">
+                  <span class="input-group-text" id="basic-addon1"><i
+                      class="bi bi-chat-square"></i> </span>
+                  <textarea type="text" name="notes" formControlName="notes"
+                    class="form-control form-control-lg mb-3 mb-lg-0"
+                    placeholder="Enter any supplier notes or purchase order terms"></textarea>
+                </div>
+                <app-validation-message [form]="form"
+                  [showErrors]="showValidationErrors" [field]="'notes'">
+                </app-validation-message>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <label class="col-lg-4 col-form-label fw-semibold fs-8">Comments
+                <app-optional-label>
+                </app-optional-label>
+              </label>
+              <div class="col-lg-8">
+                <div class="input-group flex-nowrap">
+                  <span class="input-group-text" id="basic-addon1"><i
+                      class="bi bi-chat-square"></i> </span>
+                  <textarea type="text" name="comments"
+                    formControlName="comments"
+                    class="form-control form-control-lg mb-3 mb-lg-0"
+                    placeholder="Enter any comments"></textarea>
+                </div>
+                <app-validation-message [form]="form"
+                  [showErrors]="showValidationErrors" [field]="'comments'">
+                </app-validation-message>
+              </div>
+            </div>
+          </div>
+          <div class="card-title m-0 d-flex justify-content-between">
+            <h3 class="fw-bold m-0 p-4 fs-6">Summary</h3>
+            <h3 *ngIf="getNumberOfItems()"
+              class="fs-8 py-4 fw-semibold text-gray-700">
+              ({{ getNumberOfItems() }} Items)
+            </h3>
+          </div>
+          <div class="card-body border-top p-4">
+            <div class="d-flex py-2 justify-content-between">
+              <div class="fs-8 fw-semibold text-gray-700">
+                Sub Total:
+              </div>
+              <div class="fs-8 fw-semibold text-gray-700">
+                {{ getSubTotal() | currency: currency : '' }}
+                {{ currency }}
+              </div>
+            </div>
+            <div class="d-flex py-2 justify-content-between">
+              <div class="fs-8 fw-semibold text-gray-700">
+                TAX:
+              </div>
+              <div class="fs-8 fw-semibold text-gray-700">
+                {{ getTaxAmount() | currency: currency : '' }}
+                {{ currency }}
+              </div>
+            </div>
+            <div class="d-flex py-2 justify-content-between">
+              <div class="fs-8 fw-semibold text-gray-700">
+                Discount:
+              </div>
+              <div class="fs-8 fw-semibold text-gray-700">
+                ({{ getDiscount() | currency: currency : '' }}
+                {{ currency }})
+              </div>
+            </div>
+            <hr>
+            <div class="d-flex py-2 justify-content-between">
+              <div class="fs-8 fw-semibold">
+                Total:
+              </div>
+              <div class="fs-8 fw-semibold">
+                {{ getTotal() | currency: currency : '' }}
+                {{ currency }}
+              </div>
+            </div>
+            <div
+              *ngIf="form.get('exchange_rate')?.value != 1 && form.get('exchange_rate')?.value != 0"
+              class="d-flex py-2 justify-content-between">
+              <div class="fs-8 fw-semibold text-gray-700">
+                Amount:
+              </div>
+              <div class="fs-8 fw-semibold text-gray-700">
+                {{ getConvertedAmount() | currency: '' : '' }}
+                {{ current_currency }}
+              </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-end py-4">
+            <button type="reset" class="btn btn-lg btn-light me-2">Discard</button>
+            <button (click)="save()" class="btn btn-lg btn-primary">
+              <span *ngIf="!loading"> <i
+                  class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+              <span *ngIf="loading">
+                <app-spinner></app-spinner> Please, wait ...
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

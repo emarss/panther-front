@@ -1,0 +1,106 @@
+<div *ngIf="user">
+  <div class="d-flex justify-content-between mb-4 w-100">
+    <div class="d-flex flex-column me-3">
+      <h1 class="d-flex text-dark fw-bold my-1 fs-5">{{ user.name }}</h1>
+      <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1 align-items-center">
+        <li class="breadcrumb-item text-gray-600">
+          <a routerLink="/" class="text-gray-600 fs-8 text-hover-primary">Home</a>
+        </li>
+        <li class="breadcrumb-item fs-8 text-gray-500">{{ user.name + " Profile" }}</li>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center py-2 py-md-1">
+      <button (click)="backClicked()" class="btn btn-lg btn-light"><i class="bi bi-arrow-left-short fs-4 me-2 mt-1"></i>
+        Go Back</button>
+    </div>
+  </div>
+  <div class="card w-100 mb-5">
+    <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+    <div class="card-title m-0">
+      <h3 class="fw-bold m-0 p-4 fs-6">Add New User</h3>
+    </div>
+
+    <form class="form" [formGroup]="form">
+      <div class="card-body border-top p-4">
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Full Name</label>
+          <div class="col-lg-8">
+            <input type="text" name="name" required="" formControlName="name"
+              class="form-control form-control-lg mb-3 mb-lg-0" placeholder="Enter full name">
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'name'">
+            </app-validation-message>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <label class="col-lg-4 col-form-label fw-semibold fs-8">Email Address</label>
+          <div class="col-lg-8">
+            <input type="email" autocomplete="username" name="email" formControlName="email"
+              class="form-control form-control-lg" placeholder="Enter email address">
+            <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'email'">
+            </app-validation-message>
+          </div>
+        </div>
+
+        <!-- <div *ngIf="!isEditForm()">
+          <div class="row mb-4">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Password</label>
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="input-group flex-nowrap">
+                    <input type="password" #psswdFld autocomplete="new-password" name="password"
+                      formControlName="password" class="form-control form-control-lg mb-3 mb-lg-0"
+                      placeholder="Enter password">
+                    <a class="input-group-text"
+                      (click)="psswdFld.getAttribute('type') === 'password' ? psswdFld.setAttribute('type', 'text') : psswdFld.setAttribute('type', 'password')">
+                      <i class="bi bi-eye"></i>
+                    </a>
+                  </div>
+                  <app-validation-message [form]="form" [showErrors]="showValidationErrors" [field]="'password'">
+                  </app-validation-message>
+                </div>
+                <div class="col-lg-6">
+                  <div class="input-group flex-nowrap">
+                    <input type="password" #psswdCfnFld autocomplete="new-password" name="passwordConfirmation"
+                      formControlName="passwordConfirmation" class="form-control form-control-lg"
+                      placeholder="Repeat password">
+                    <a class="input-group-text"
+                      (click)="psswdCfnFld.getAttribute('type') === 'password' ? psswdCfnFld.setAttribute('type', 'text') : psswdCfnFld.setAttribute('type', 'password')">
+                      <i class="bi bi-eye"></i>
+                    </a>
+                  </div>
+                  <app-validation-message [form]="form" [showErrors]="showValidationErrors"
+                    [field]="'passwordConfirmation'"></app-validation-message>
+                  <div class="text-danger fw-semibold my-2"
+                    *ngIf="form.controls['passwordConfirmation'].value.length >= 6 && form.controls['password'].value.length >= 6 && form.controls['passwordConfirmation'].value !== form.controls['password'].value">
+                    Passwords do not match
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+
+      </div>
+
+
+      <div class="card-footer d-flex justify-content-end py-4">
+        <button type="reset" class="btn btn-lg btn-light me-2">Discard</button>
+        <button (click)="save()" class="btn btn-lg btn-primary"><span *ngIf="!loading"> <i
+              class="bi bi-check-all fw-semibold me-2"></i> Save</span>
+          <span *ngIf="loading">
+            <app-spinner></app-spinner> Please, wait ...
+          </span></button>
+      </div>
+
+      <input type="hidden">
+    </form>
+
+
+
+  </div>
+
+</div>

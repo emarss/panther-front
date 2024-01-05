@@ -1,0 +1,84 @@
+@import '../../../assets/scss/variables.scss';
+
+nav {
+  background-color: $accent-color;
+  height: 70px;
+  z-index: 100;
+
+  .nav-item:hover .nav-link,
+  .nav-link.active {
+    border-bottom: unset;
+  }
+
+  .nav-link {
+    font-weight: 600;
+    padding: unset;
+  }
+
+  .notification {
+    .badge {
+      position: relative;
+      top: -15px;
+      right: 5px;
+      border-radius: 50%;
+      padding: 5px 6px;
+      height: 20px;
+    }
+  }
+
+  .switch-company-dropdown {
+    .btn {
+      min-width: 250px;
+      color: $text-gray-200;
+      background-color: $primary-color-2;
+      font-weight: 600;
+      height: 48px;
+      align-items: center;
+    }
+
+    .btn:hover {
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+
+  .user-icon {
+    .bi-person {
+      border-radius: 0.475rem;
+      font-size: 40px;
+      padding: auto;
+    }
+  }
+
+  .profile-dropdown {
+    width: 275px;
+  }
+
+  i.bi {
+    font-size: 18px;
+  }
+
+  i.bi-person-gear {
+    font-size: 30px;
+    color: #fff;
+  }
+}
+
+.loading-overlay {
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+html {
+  background-color: #FFF;
+}
+
+
+.loading-bar {
+  top: 62px;
+  position: fixed;
+  height: 8px;
+  width: 100%;
+  z-index: 100;
+}

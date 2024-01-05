@@ -1,0 +1,9 @@
+<ngb-toast *ngFor="let toast of toastService.toasts" [ngClass]="'bg-white'" [autohide]="true"
+  [delay]="toast.delay || 5000" (hiddden)="toastService.remove(toast)">
+  <ng-template ngbToastHeader>
+    <div class="{{ toast.class }} w-100 fw-bold">
+      {{ toast.header }}
+    </div>
+  </ng-template>
+  {{ toast.body }}
+</ngb-toast>

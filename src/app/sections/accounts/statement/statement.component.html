@@ -1,0 +1,109 @@
+<div class="card w-100 mt-4 mb-5">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+
+  <div class="card-title py-2 px-3 d-flex align-items-center justify-content-between m-0">
+    <div class="d-flex btn-group align-items-center py-2 ">
+      <a (click)="setSegment('1M')" placement="top" ngbTooltip="Past 1 Month"
+        class="btn btn-lg {{ reportOptions.segment === '1M' ? 'btn-primary' : 'btn-light' }} fw-bold px-3">1M</a>
+      <a (click)="setSegment('3M')" placement="top" ngbTooltip="Past 3 Months"
+        class="btn btn-lg {{ reportOptions.segment === '3M' ? 'btn-primary' : 'btn-light' }} fw-bold px-3">3M</a>
+      <a (click)="setSegment('6M')" placement="top" ngbTooltip="Past 6 Months"
+        class="btn btn-lg {{ reportOptions.segment === '6M' ? 'btn-primary' : 'btn-light' }} fw-bold px-3">6M</a>
+      <a (click)="setSegment('1Y')" placement="top" ngbTooltip="Past 1 Year"
+        class="btn btn-lg {{ reportOptions.segment === '1Y' ? 'btn-primary' : 'btn-light' }} fw-bold px-3">1Y</a>
+      <a (click)="setSegment('YTD')" placement="top" ngbTooltip="Year To Date"
+        class="btn btn-lg {{ reportOptions.segment === 'YTD' ? 'btn-primary' : 'btn-light' }} fw-bold px-3">YTD</a>
+      <a (click)="setSegment('ALL')" placement="top" ngbTooltip="All Time"
+        class="btn btn-lg {{ reportOptions.segment === 'ALL' ? 'btn-primary' : 'btn-light' }} fw-bold px-3">ALL</a>
+    </div>
+
+    <div class="card-toolbar d-flex py-2 align-items-center">
+      <input type="date" [(ngModel)]="startDateString" (ngModelChange)="startDateChanged()"
+        class="form-control av-input form-control-solid d-inline" />
+      <span class="text-gray-800 fs-7 ms-4 me-3 fw-bold">To</span>
+      <input type="date" [(ngModel)]="endDateString" (ngModelChange)="endDateChanged()"
+        class="form-control av-input form-control-solid d-inline" />
+    </div>
+  </div>
+  <div class="card-title py-2 px-3 m-0">
+    <div class="d-flex justify-content-between">
+      <div class="w-100 pe-2">
+        <div class="bg-light p-3 rounded-2">
+          <h5 class="fw-bolder text-truncate">{{ openingBalance | defaultCurrency : true }}</h5>
+          <span class="fw-semibold text-gray-600 text-truncate fs-7">Opening Bal</span>
+        </div>
+      </div>
+      <div class="w-100 pe-2">
+        <div class="bg-light p-3 rounded-2">
+          <h5 class="fw-bolder text-truncate">{{ totalDeposits | defaultCurrency : true }}</h5>
+          <span class="fw-semibold text-gray-600 text-truncate fs-7">Deposits</span>
+        </div>
+      </div>
+      <div class="w-100 pe-2">
+        <div class="bg-light p-3 rounded-2">
+          <h5 class="fw-bolder text-truncate">{{ totalReceipts | defaultCurrency : true }}</h5>
+          <span class="fw-semibold text-gray-600 text-truncate fs-7">Receipts</span>
+        </div>
+      </div>
+      <div class="w-100 pe-2">
+        <div class="bg-light p-3 rounded-2">
+          <h5 class="fw-bolder text-truncate">{{ totalPayments | defaultCurrency : true }}</h5>
+          <span class="fw-semibold text-gray-600 text-truncate fs-7">Payments</span>
+        </div>
+      </div>
+      <div class="w-100 pe-2">
+        <div class="bg-light p-3 rounded-2">
+          <h5 class="fw-bolder text-truncate">{{ totalWithdrawals | defaultCurrency : true }}</h5>
+          <span class="fw-semibold text-gray-600 text-truncate fs-7">Withdrawals</span>
+        </div>
+      </div>
+      <div class="w-100">
+        <div class="bg-light p-3 rounded-2">
+          <h5 class="fw-bolder text-truncate">{{ closingBalance | defaultCurrency : true }}</h5>
+          <span class="fw-semibold text-gray-600 text-truncate fs-7">Closing Bal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body border-top w-100 main-chart-container">
+    <div class="table-responsive">
+      <table class="table align-middle table-hover table-row-dashed fs-8 no-footer">
+        <thead>
+          <tr class="text-start text-gray-800 fs-8 text-uppercase">
+            <th class="pb-3 fw-bold">Date </th>
+            <th class="pb-3 fw-bold">Transaction Description </th>
+            <th class="pb-3 fw-bold text-end">Converted Amount</th>
+            <th class="pb-3 fw-bold text-end">Balance</th>
+            <th class="pb-3 fw-bold text-end"></th>
+          </tr>
+        </thead>
+        <tbody class="fw-semibold text-gray-600">
+          <tr *ngIf="data?.length === 0 && loading == false">
+            <td colspan="6" class="py-5 text-center">No results found</td>
+          </tr>
+          <tr *ngFor="let item of data">
+            <td>{{ item.date | date: "d MMM, yyyy" }}</td>
+            <td>New {{ item.type.toLowerCase() }} #{{ item.number }} ({{ item.account }})</td>
+            <td class="text-end">{{ item.converted_amount | defaultCurrency }}</td>
+            <td class="text-end">{{ item.balance | defaultCurrency }}
+            </td>
+            <td class="d-flex justify-content-end">
+              <a *ngIf="item.type === 'Refund'" [routerLink]="[routes.financials.receipts.show, item.uuid]"
+                class="btn btn-light btn-lg me-2 fw-bold">
+                <i class="bi bi-eye me-2 fw-semibold"></i> Show {{ item.type }}
+              </a>
+              <a *ngIf="item.type === 'Payment'" [routerLink]="[routes.financials.payments.show, item.uuid]"
+                class="btn btn-light btn-lg me-2 fw-bold">
+                <i class="bi bi-eye me-2 fw-semibold"></i> Show {{ item.type }}
+              </a>
+              <a *ngIf="item.type === 'Purchase'" [routerLink]="[routes.inventory.purchase_orders.show, item.uuid]"
+                class="btn btn-light btn-lg me-2 fw-bold">
+                <i class="bi bi-eye me-2 fw-semibold"></i> Show {{ item.type }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

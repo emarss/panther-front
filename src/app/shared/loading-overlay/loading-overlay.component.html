@@ -1,0 +1,7 @@
+<div class="loading-overlay">
+  <div class="d-block text-center">
+    <app-loading-gif-image></app-loading-gif-image>
+    <div *ngIf="showProgress" class="d-block fs-7 fw-bold text-dark text-center">{{ progress }}%</div>
+    <div *ngIf="showStatus" class="d-block fs-7 fw-bold text-dark text-center">{{ status }}</div>
+  </div>
+</div>

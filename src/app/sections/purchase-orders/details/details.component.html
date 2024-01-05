@@ -1,0 +1,316 @@
+<app-page-loading-overlay *ngIf="purchaseOrder == null" [showMenu]="true"></app-page-loading-overlay>
+<div class="card w-100 mb-5">
+  <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card-title d-flex align-items-center m-0">
+        <h3 class="fw-bold m-0 p-4 fs-6">Purchase Order Details</h3>
+      </div>
+      <div class="card-body border-top p-4">
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Purchase Order Number</label>
+          <div class="col-lg-7">
+            <input class="form-control form-control-lg form-control-solid" value="#{{ purchaseOrder.number }}" disabled />
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Date</label>
+          <div class="col-lg-7">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ purchaseOrder.date | date: 'd MMM, yyyy' }}" disabled />
+          </div>
+        </div>
+
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Due Date</label>
+          <div class="col-lg-7">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ purchaseOrder.due_date | date : 'd MMM, yyyy' }}"
+              disabled />
+          </div>
+
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Reference</label>
+          <div class="col-lg-7">
+            <input class="form-control form-control-lg form-control-solid"
+              value="{{ purchaseOrder.reference ?? '--' }}" disabled />
+          </div>
+        </div>
+
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Supplier</label>
+          <div class="col-lg-7">
+            <div class="input-group flex-nowrap">
+              <input class="form-control form-control-lg form-control-solid" value="{{ purchaseOrder.supplier?.name }}"
+                disabled />
+              <a class="input-group-text bg-primary text-white border-primary"
+                [routerLink]="[routes.people.suppliers.show, purchaseOrder.supplier?.uuid]">
+                <i class="bi bi-box-arrow-up-right fw-bold"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Order Status</label>
+          <div class="col-lg-7">
+            <div class="form-control py-1 form-control-lg form-control-solid">
+              <span *ngIf="purchaseOrder.isPending()"
+                class="badge px-2 status-badge fs-9 pb-2 pt-2 bg-danger">{{ purchaseOrder.purchase_order_status }}</span>
+              <span *ngIf="purchaseOrder.isCancelled()"
+                class="badge px-2 status-badge fs-9 pb-2 pt-2 bg-dark">{{ purchaseOrder.purchase_order_status }}</span>
+              <span *ngIf="purchaseOrder.isCompleted()"
+                class="badge px-2 status-badge fs-9 pb-2 pt-2 bg-green">{{ purchaseOrder.purchase_order_status }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-1">
+          <label class="col-lg-5 col-form-label fw-semibold fs-8">Payment Status</label>
+          <div class="col-lg-7">
+            <div class="form-control py-1 form-control-lg form-control-solid">
+              <span *ngIf="purchaseOrder.isPaid()"
+                class="badge px-2 status-badge fs-9 pb-2 pt-2 bg-green">{{ purchaseOrder.payment_status }}</span>
+              <span *ngIf="purchaseOrder.isNotPaid()"
+                class="badge px-2 status-badge fs-9 pb-2 pt-2 bg-danger">{{ purchaseOrder.payment_status }}</span>
+              <span *ngIf="purchaseOrder.isPartiallyPaid() || purchaseOrder.isOverPaid()"
+                class="badge px-2 status-badge fs-9 pb-2 pt-2 bg-amber">{{ purchaseOrder.payment_status }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-4 border-start">
+      <div class="card-title m-0">
+        <h3 class="fw-bold m-0 p-4 fs-6">More Info</h3>
+      </div>
+      <div class="card-body border-top p-4">
+        <div class="row mb-3 d-flex justify-content-between align-items-center">
+          <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created By</label>
+          <div class="col-xxl-8 d-flex justify-content-between align-items-center">
+            <span class="fw-semibold text-gray-800">{{
+              purchaseOrder.user?.name
+            }}</span>
+            <a class="" [routerLink]="[routes.administration.users.show, purchaseOrder.user?.uuid]">
+              <i class="bi bi-box-arrow-up-right fw-bold"></i>
+            </a>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Created At</label>
+          <div class="col-xxl-8">
+            <span class="fw-semibold text-gray-800">{{
+              purchaseOrder.date_created | date: "d MMM, yyyy HH:mm:ss"
+            }}</span>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label class="col-xxl-4 text-gray-600 fw-semibold fs-8">Last Updated</label>
+          <div class="col-xxl-8">
+            <span class="fw-semibold text-gray-800">{{
+              purchaseOrder.date_updated | date: "d MMM, yyyy HH:mm:ss"
+            }}</span>
+          </div>
+        </div>
+        <hr />
+        <div class="d-flex align-items-center py-2 py-md-1">
+          <button appPermission [permissionArray]="[['purchase_orders', 4]]" (click)="confirmDelete()"
+            class="btn btn-lg btn-danger me-2">
+            <i class="bi bi-trash me-2 mt-1"></i> Delete
+          </button>
+          <a appPermission [permissionArray]="[['purchase_orders', 3]]"
+            [routerLink]="[routes.inventory.purchase_orders.edit, purchaseOrder.uuid]" class="btn btn-lg btn-primary">
+            <i class="bi bi-pencil-square me-2 mt-1"></i> Edit</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="fw-bold m-0 pt-4 fs-6">Purchase Order Items</h3>
+          <hr>
+          <div class="mb-5 py-2">
+            <table class="table align-middle table-header-border-solid fs-8 no-footer text-gray-700">
+              <thead>
+                <tr class="text-start fs-8 text-uppercase">
+                  <th style="width: 40px;" class="pb-3 fw-bold">#</th>
+                  <th class="pb-3 fw-bold">Item Description</th>
+                  <th style="width: 120px;" class="pb-3 fw-bold text-end">Quantity</th>
+                  <th style="width: 150px;" class="pb-3 fw-bold text-end">Unit Price</th>
+                  <th style="width: 150px;" class="pb-3 fw-bold text-end">Tax</th>
+                  <th style="width: 150px;" class="pb-3 fw-bold text-end">Total</th>
+                  <th style="width: 50px;" class="pb-3 fw-bold text-end"></th>
+                </tr>
+              </thead>
+              <tbody class="fw-semibold">
+                <tr *ngFor="let item of purchaseOrder.items; let i = index;">
+                  <td>{{ i+1 }}</td>
+                  <td>
+                    <span class="fs-8 fs-bold">{{ item.item!.description }}</span>
+                  </td>
+                  <td class="text-end">
+                    <span class="fs-8 fs-bold">{{ item.quantity }}</span>
+                  </td>
+                  <td class="text-end">
+                    <span
+                      class="fs-8 fs-bold">{{ item.unit_selling_price | currency: purchaseOrder.currency : '' }}
+                      {{ purchaseOrder.currency }}</span>
+                  </td>
+                  <td class="text-end">
+                    <span *ngIf="!item.tax">--</span>
+                    <span *ngIf="item.tax" class="fs-8 fs-bold">{{ item.tax_model?.name }} ({{ item.tax }}%)</span>
+                  </td>
+                  <td class="text-end">
+                    {{ item.total_amount | currency: purchaseOrder.currency : '' }}
+                    {{ purchaseOrder.currency }}</td>
+                  <td>
+                    <a class="btn btn-primary px-3" [routerLink]="[routes.inventory.items.show, item.item_uuid]">
+                      <i class="bi bi-box-arrow-up-right fw-bold"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="fw-bold m-0 pt-4 fs-6">Billing Summary</h3>
+          <hr>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Sub Total (Exc VAT)</label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.converted_sub_total_amount! | defaultCurrency }}
+                <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                  [amount]="purchaseOrder.converted_sub_total_amount!" [exchange_rate]="purchaseOrder.exchange_rate">
+                </app-converted-from-default-currency>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">VAT</label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.converted_tax! | defaultCurrency }}
+                <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                  [amount]="purchaseOrder.converted_tax!" [exchange_rate]="purchaseOrder.exchange_rate">
+                </app-converted-from-default-currency>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Gross Total</label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.converted_gross_total_amount! | defaultCurrency }}
+                <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                  [amount]="purchaseOrder.converted_gross_total_amount!" [exchange_rate]="purchaseOrder.exchange_rate">
+                </app-converted-from-default-currency>
+
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Total Payments Paid</label>
+            <div class="col-lg-8">
+              <div class="input-group flex-nowrap">
+                <div class="form-control form-control-lg form-control-solid">
+                  {{ purchaseOrder.converted_total_payments_amount! | defaultCurrency }}
+                  <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                    [amount]="purchaseOrder.converted_total_payments_amount!"
+                    [exchange_rate]="purchaseOrder.exchange_rate">
+                  </app-converted-from-default-currency>
+                </div>
+                <a class="input-group-text bg-primary text-white border-primary"
+                  [routerLink]="[routes.inventory.purchase_orders.payments, purchaseOrder.uuid]">
+                  <i class="bi bi-box-arrow-up-right fw-bold"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Total Refunds Received</label>
+            <div class="col-lg-8">
+              <div class="input-group flex-nowrap">
+                <div class="form-control form-control-lg form-control-solid">
+                  {{ purchaseOrder.converted_total_receipts_amount! | defaultCurrency }}
+                  <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                    [amount]="purchaseOrder.converted_total_receipts_amount!"
+                    [exchange_rate]="purchaseOrder.exchange_rate">
+                  </app-converted-from-default-currency>
+                </div>
+                <a class="input-group-text bg-primary text-white border-primary"
+                  [routerLink]="[routes.inventory.purchase_orders.refunds, purchaseOrder.uuid]">
+                  <i class="bi bi-box-arrow-up-right fw-bold"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Total Discount</label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.converted_discount! | defaultCurrency }}
+                <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                  [amount]="purchaseOrder.converted_discount!" [exchange_rate]="purchaseOrder.exchange_rate">
+                </app-converted-from-default-currency>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Amount Due</label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.converted_amount_due! | defaultCurrency }}
+                <app-converted-from-default-currency [currency]="purchaseOrder.currency"
+                  [amount]="purchaseOrder.converted_amount_due!" [exchange_rate]="purchaseOrder.exchange_rate">
+                </app-converted-from-default-currency>
+              </div>
+            </div>
+          </div>
+
+          <h3 class="fw-bold m-0 pt-4 fs-6">Additional Info</h3>
+          <hr>
+          <div class="row mb-1" appExchangeRateFlat [rate]="purchaseOrder.exchange_rate">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Exchange Rate</label>
+            <div class="col-lg-8">
+              <app-exchange-rate-field [isDisabled]="true" [currency]="purchaseOrder.currency"
+                [(ngModel)]="purchaseOrder.exchange_rate" [title]="'Enter Exchange Rate'">
+              </app-exchange-rate-field>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Account</label>
+            <div class="col-lg-8">
+              <div class="input-group flex-nowrap">
+                <input class="form-control form-control-lg form-control-solid" value="{{ purchaseOrder.account?.name }}"
+                  disabled />
+                <a class="input-group-text bg-primary text-white border-primary"
+                  [routerLink]="[routes.administration.accounts.show, purchaseOrder.account?.uuid]">
+                  <i class="bi bi-box-arrow-up-right fw-bold"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Notes <app-optional-label></app-optional-label>
+            </label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.notes ?? '--' }}</div>
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label class="col-lg-4 col-form-label fw-semibold fs-8">Comments <app-optional-label></app-optional-label>
+            </label>
+            <div class="col-lg-8">
+              <div class="form-control form-control-lg form-control-solid">
+                {{ purchaseOrder.comments ?? '--' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

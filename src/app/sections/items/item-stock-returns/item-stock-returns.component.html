@@ -1,0 +1,149 @@
+<div *ngIf="item != null">
+  <div class="card w-100 mb-5">
+    <app-loading-overlay *ngIf="loading"></app-loading-overlay>
+    <div class="card-body">
+      <h5 class="card-title mb-3 d-flex justify-content-between">
+        <div class="search-form">
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">
+              <i class="bi bi-search fw-bold"></i>
+            </span>
+            <input (keydown.enter)="search()" type="search" [(ngModel)]="searchKey"
+              placeholder="Search Stock Returns..." class="form-control form-control-solid ps-0" aria-label="Search"
+              aria-describedby="addon-wrapping" />
+            <button (click)="search()" class="btn btn-lg btn-primary text-white fw-bold">
+              Search
+            </button>
+          </div>
+        </div>
+        <div class="w-50 d-flex justify-content-end align-items-center">
+          <div ngbDropdown display="dynamic" placement="bottom-end"> <button type="button"
+              class="btn btn-primary text-white py-2 fw-bold" ngbDropdownToggle>
+              <i class="bi bi-box-arrow-up-right fw-semibold me-2"></i> Export
+              <span class="ms-2">
+                <img src="../../../assets/icons/caret-white.svg" alt="">
+              </span>
+            </button>
+            <div ngbDropdownMenu>
+              <button (click)="exportData('csv')" ngbDropdownItem>Export CSV</button>
+              <button (click)="exportData('xlsx')" ngbDropdownItem>Export Excel</button>
+            </div>
+          </div>
+        </div>
+      </h5>
+      <div class="table-responsive">
+        <table class="table align-middle table-hover table-row-dashed fs-8 no-footer">
+          <thead>
+            <tr class="text-start text-gray-800 fs-8 text-uppercase">
+              <th class="pb-3 fw-bold">
+                <ng-template #salespersonCol [ngTemplateOutlet]="salespersonCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'salesperson' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Salesperson
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                      paginationOptions.directionIsAsc()
+                        ? 'bi-sort-up'
+                        : 'bi-sort-down'
+                    }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold">
+                <ng-template #quantityCol [ngTemplateOutlet]="quantityCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'quantity' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Quantity
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                      paginationOptions.directionIsAsc()
+                        ? 'bi-sort-up'
+                        : 'bi-sort-down'
+                    }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold">
+                <ng-template #commentsCol [ngTemplateOutlet]="commentsCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'comments' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Comments
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                      paginationOptions.directionIsAsc()
+                        ? 'bi-sort-up'
+                        : 'bi-sort-down'
+                    }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold">
+                <ng-template #dateCol [ngTemplateOutlet]="dateCol" let-field="field"
+                  [ngTemplateOutletContext]="{ field: 'date' }">
+                  <a (click)="changeSort(field)" href="javascript:void(0)">Date
+                    <i *ngIf="paginationOptions.sort === field" class="bi ms-3 {{
+                      paginationOptions.directionIsAsc()
+                        ? 'bi-sort-up'
+                        : 'bi-sort-down'
+                    }}"></i>
+                  </a>
+                </ng-template>
+              </th>
+              <th class="pb-3 fw-bold text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="fw-semibold text-gray-600">
+            <tr *ngIf="itemStockReturnsList?.length === 0 && loading == false">
+              <td colspan="5" class="py-5 text-center">No results found</td>
+            </tr>
+            <tr class="odd" *ngFor="let stockReturn of itemStockReturnsList">
+              <td>{{ stockReturn.salesperson?.name }}</td>
+              <td>{{ stockReturn.quantity }}</td>
+              <td>{{ stockReturn.comments ?? '--' }}</td>
+              <td>{{ stockReturn.date | date: "d MMM, yyyy HH:mm" }}</td>
+              <td class="d-flex justify-content-end">
+                <a [routerLink]="[
+                  routes.inventory.stock_returns.show,
+                  stockReturn.uuid
+                ]" class="btn btn-light btn-lg me-2 fw-bold">
+                  <i class="bi bi-eye me-2 fw-semibold"></i> Show
+                </a>
+                <div ngbDropdown container="body" display="dynamic" placement="bottom-end">
+                  <button type="button" class="btn btn-light btn-lg fw-bold" ngbDropdownToggle>
+                    <i class="bi bi-three-dots me-2 fw-bold"></i> More
+                    <span class="ms-2">
+                      <img src="../../../assets/icons/caret.svg" alt="" />
+                    </span>
+                  </button>
+                  <div ngbDropdownMenu>
+                    <a [routerLink]="[
+                      routes.inventory.stock_returns.edit,
+                      stockReturn.uuid
+                    ]" ngbDropdownItem>Edit</a>
+                    <button ngbDropdownItem (click)="confirmDeleteStockReturn(stockReturn)">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+          <div class="w-auto" *ngIf="paginatedResults">
+            <app-pagination-select [(ngModel)]="paginatedResults.per_page" [options]="[6,10,20,100, 'ALL']"
+              [selectedOption]="paginatedResults.per_page" (ngModelChange)="onPerPageChanged()">
+            </app-pagination-select>
+          </div>
+          <div *ngIf="paginatedResults">
+            <ngb-pagination [collectionSize]="paginatedResults.total" [(page)]="paginatedResults.current_page"
+              [pageSize]="paginatedResults.per_page" [rotate]="true" [boundaryLinks]="true" [maxSize]="5"
+              (pageChange)="onPageNumberChanged()">
+              <ng-template ngbPaginationFirst>First</ng-template>
+              <ng-template ngbPaginationLast>Last</ng-template>
+              <ng-template ngbPaginationPrevious>Prev</ng-template>
+              <ng-template ngbPaginationNext>Next</ng-template>
+              <ng-template ngbPaginationEllipsis>...</ng-template>
+              <ng-template ngbPaginationNumber let-page>{{ page }}</ng-template>
+            </ngb-pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

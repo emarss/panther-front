@@ -1,0 +1,13 @@
+<div ngbDropdown display="dynamic" placement="top-end" container="body">
+  <button type="button" class="btn d-flex justify-content-between w-100" ngbDropdownToggle>
+    <span>{{ selectedOption }}</span>
+    <span class="ms-2">
+      <app-ac-icon-arrow-down></app-ac-icon-arrow-down>
+    </span>
+  </button>
+  <div ngbDropdownMenu class="w-100">
+    <div class="results">
+      <button *ngFor="let item of options" ngbDropdownItem (click)="onItemClick(item)">{{ item }}</button>
+    </div>
+  </div>
+</div>
